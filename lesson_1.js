@@ -1,4 +1,4 @@
-//Для http://jsbasics.geekbrains.ru
+// Для http://jsbasics.geekbrains.ru
 
 let userName = prompt('Введите ваше имя');
 
@@ -30,16 +30,16 @@ let b = prompt('Введите число b');
 console.log('Результат: ' + a * b);
 
 
-//Домашнее задание 1
-//Вывод возврата в консоль
-let userName = prompt('Введите ваше имя'); //Запрашиваем и сохраняем имя
-let userYear = parseInt(prompt('Введите ваш год рождения')); //Запрашиваем и сохраняем год
-let currentYear = parseInt('2023'); //Текущий год
-let currentAge = currentYear - userYear + 1; //Рассчитываем возвраст
+// Домашнее задание 1
+// Вывод возвраcта в консоль
+let userName = prompt('Введите ваше имя'); // запрашиваем и сохраняем имя
+let userYear = parseInt(prompt('Введите ваш год рождения')); // запрашиваем и сохраняем год
+let currentYear = parseInt('2023'); // текущий год
+let currentAge = currentYear - userYear + 1; // рассчитываем возвраст
 
-console.log(userName + ', уже в следующем году вам будет ' + currentAge + ' :-('); //Выводим в консоль сообщение о возрасте
+console.log(userName + ', уже в следующем году вам будет ' + currentAge + ' :-('); // выводим в консоль сообщение о возрасте
 
-//Рисуем смайл в консоль
+// Рисуем смайл в консоль
 drawCircle(200, 200, 200, 'black');
 drawCircle(120, 120, 50, 'white');
 drawCircle(280, 120, 50, 'white');
