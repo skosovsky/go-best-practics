@@ -8,6 +8,7 @@
         document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
     </script> <!-- Скрипт для автообновления страницы -->
     <title>Контакты | Сеть оптик "Видимо-невидимо"</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
@@ -18,13 +19,13 @@
     </ul>
     <hr>
     <h1>Напишите нам</h1>
-    <form action="#">
+    <form action="#" class="contacts_form">
         <label for="name">Ваше имя<br><input type="text"></label><br>
         <label for="email">Ваш e-mail<br><input type="email"></label><br>
         <label for="caption">Тема<br><select><option>Покупка товаров</option><option>Другое</option></select></label><br>
-        <label for="description">Текст обращения<br><textarea id="description" rows="5"></textarea></label><br>
-        <label for="file"><input type="file"></label><br><br>
-        <input type="submit" value="Отправить"> <input type="reset" value="Отмена"><br>
+        <label for="description">Текст обращения<br><textarea></textarea></label><br>
+        <label for="file">Файл<br><input type="file" id="files"></label><br><br>
+        <input type="submit" value="Отправить" id="buttom_send"> <input type="reset" value="Отмена" id="buttom_cancel"><br>
     </form>
     <h2>Контакты</h2>
     <p>Телефон: <a href="tel:74952360005">+7 (495) 236-00-05</a></p>
