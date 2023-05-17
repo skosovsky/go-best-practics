@@ -45,10 +45,17 @@ h4 {
 
 .main_image {
 	outline: 4px solid darkblue;
+	float: left;
+	margin-right: 20px;
+	margin-bottom: 20px;
 }
 
 .main_image:hover {
 	outline: 0px;
+}
+
+.other_content {
+	clear: both;
 }
 
 .contacts_form input {
@@ -121,15 +128,17 @@ h4 {
 #header {
 	background-color: #007fe1;
 	height: 80px;
+	background-image: url(img/background.png);
 }
 
 #footer {
 	background-color: #007fe1;
 	color: white;
 	font-size: 14px;
+	text-align: right;
 	height: 24px;
 	padding-top: 7px;
-	padding-left: 7px;
+	padding-right: 15px;
 }
 
 #header img {
@@ -147,6 +156,11 @@ h4 {
 .menu li {
 	list-style-type: none;
 	background-color: #007fe1;
+	display: inline-block;
+	padding-left: 25px;
+	padding-right: 25px;
+	padding-top: 25px;
+	float: right;
 }
 
 .menu li a {
@@ -199,3 +213,33 @@ h4 {
 	text-align: center;
 }
 
+.container {
+	width: 500px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#buy_button {
+	width: 200px;
+	height: 40px;
+	color: white;
+	background: #007fe1;
+	font-size: 20px;
+}
+
+#buy_button:hover {
+	font-size: 25px;
+}
+
+#buy_button:active {
+	font-size: 30px;
+}
+
+.product {
+	float: left;
+	margin: 20px 20px 20px 20px;
+}
+
+.hr {
+	clear: both;
+}
