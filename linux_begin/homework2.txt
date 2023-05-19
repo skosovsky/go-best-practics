@@ -1,0 +1,59 @@
+#подключение к удаленной машине
+ssh user@192.168.1.47
+
+#список команда по заданию
+cd ~
+mkdir students mentors
+touch students/students_list.txt
+touch mentors/mentors_list.txt
+echo -e "Никита Дорани\nЛюдмила Лакиза\nАнастасия Пылаева\nDenis Vershinin\nОльга Г\nВладлен Климов\nДмитрий Баратов\nМарина Павлова\nЮлия Кызьюрова\nКирилл Золотько\nИгорь Коровкин\nКириллВадимович Пименов\nВладимир Бондаренко\nАндрей Пермяков\nЕвгений Кувалдин\nАлександра Ляшенко\nПавел Зуев\nГлеб Помазнев\nБиликто Балбаров\nМарияСергеевна Ковальчук\nАртём Комиссаров\nНаталья Акулич\nАнастасия Колчина\nВиктория Гречишкина\nЕкатерина Литусова\nДиана Башкирова\nРоман Теряев\nЕвгения Кучерявенко\nОльга Софьянович\nАлександр Александровский\nСветлана Хомич\nИринаСергеевна Немыкина" >students/students_list.txt
+echo "Юрий Тигунов" >mentors/mentors_list.txt
+mv mentors/mentors_list.txt students/
+rm -r mentors
+mv students students_and_mentors
+rm -rf students_and_mentors
+
+#результат
+skosovsky@SergKs-Mac:~ {$ ssh user@192.168.1.47
+Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 5.15.0-72-generic aarch64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri May 19 15:47:14 MSK 2023
+
+  System load:             0.0576171875
+  Usage of /:              26.5% of 29.82GB
+  Memory usage:            42%
+  Swap usage:              0%
+  Processes:               209
+  Users logged in:         1
+  IPv4 address for enp0s5: 192.168.1.47
+  IPv6 address for enp0s5: fdbb:408e:ff47:4fe9:21c:42ff:fe37:8f06
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Fri May 19 15:45:08 2023 from 192.168.1.128
+-bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+user@test:~$ cd ~
+user@test:~$ mkdir students mentors
+user@test:~$ touch students/students_list.txt
+user@test:~$ touch mentors/mentors_list.txt
+user@test:~$ echo -e "Никита Дорани\nЛюдмила Лакиза\nАнастасия Пылаева\nDenis Vershinin\nОльга Г\nВладлен Климов\nДмитрий Баратов\nМарина Павлова\nЮлия Кызьюрова\nКирилл Золотько\nИгорь Коровкин\nКириллВадимович Пименов\nВладимир Бондаренко\nАндрей Пермяков\nЕвгений Кувалдин\nАлександра Ляшенко\nПавел Зуев\nГлеб Помазнев\nБиликто Балбаров\nМарияСергеевна Ковальчук\nАртём Комиссаров\nНаталья Акулич\nАнастасия Колчина\nВиктория Гречишкина\nЕкатерина Литусова\nДиана Башкирова\nРоман Теряев\nЕвгения Кучерявенко\nОльга Софьянович\nАлександр Александровский\nСветлана Хомич\nИринаСергеевна Немыкина" >students/students_list.txt
+user@test:~$ echo "Юрий Тигунов" >mentors/mentors_list.txt
+user@test:~$ mv mentors/mentors_list.txt students/
+user@test:~$ rm -r mentors
+user@test:~$ mv students students_and_mentors
+user@test:~$ rm -rf students_and_mentors
