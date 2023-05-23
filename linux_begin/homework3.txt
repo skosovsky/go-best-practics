@@ -1,0 +1,66 @@
+user@test:~$ sudo useradd -m -d /home/ivan -s /bin/bash ivan #Create user "ivan"
+user@test:~$ more /etc/passwd | grep ^ivan #View passwd with filter "ivan"
+ivan:x:1001:1001::/home/ivan:/bin/bash
+user@test:~$ sudo userdel -fr ivan #Delete user "ivan"
+userdel: ivan mail spool (/var/mail/ivan) not found
+
+user@test:~$ sudo useradd -m -d /home/ivan -s /bin/bash ivan #Create user "ivan" again
+user@test:~$ sudo groupadd test_group #Create group "test_group"
+user@test:~$ sudo groupadd ivan_new #Create group "ivan_new"
+user@test:~$ more /etc/group | grep test #View group with filter "test"
+test_group:x:1002:
+user@test:~$ more /etc/group | grep ivan_new #View group with filter "ivan_new"
+ivan_new:x:1003:
+
+user@test:~$ sudo usermod -g ivan_new ivan #Edit (Replace) primary group for "ivan"
+user@test:~$ sudo usermod -G test_group ivan #Edit (Replace) secondary group for "ivan"
+user@test:~$ sudo usermod -G test_group user #Edit (Replace) secondary group for "user"
+user@test:~$ sudo usermod -aG sudo ivan #Edit (Add) secondary group for "ivan" - root access
+
+user@test:~$ sudo passwd ivan #Create password for "ivan"
+New password: 
+BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: 
+passwd: password updated successfully
+user@test:~$ more /etc/group | grep sudo #View group with filter "sudo"
+sudo:x:27:ivan
+user@test:~$ su ivan #Login to "ivan"
+Password: 
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+ivan@test:/home/user$ sudo apt update #View new system update
+Hit:1 http://ports.ubuntu.com/ubuntu-ports jammy InRelease
+Get:2 http://ports.ubuntu.com/ubuntu-ports jammy-updates InRelease [119 kB]
+Get:3 http://ports.ubuntu.com/ubuntu-ports jammy-backports InRelease [108 kB]
+Get:4 http://ports.ubuntu.com/ubuntu-ports jammy-security InRelease [110 kB]
+Get:5 http://ports.ubuntu.com/ubuntu-ports jammy-backports/main arm64 Packages [40.6 kB]
+Get:6 http://ports.ubuntu.com/ubuntu-ports jammy-backports/universe arm64 Packages [21.7 kB]
+Fetched 399 kB in 1s (548 kB/s)     
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+33 packages can be upgraded. Run 'apt list --upgradable' to see them.
+ivan@test:/home/user$ exit #Exit from "ivan"
+exit
+user@test:~$ sudo gpasswd -d ivan sudo #Remove user "ivan" from group (remove root access)
+Removing user ivan from group sudo
+
+user@test:~$ sudo visudo #Add ivan ALL=(ALL) /bin/gpasswd
+user@test:~$ su ivan #Login to "ivan"
+Password: 
+ivan@test:/home/user$ sudo gpasswd -d ivan fake_group #Test access to gpasswd for "ivan"
+gpasswd: group 'fake_group' does not exist in /etc/group
+ivan@test:/home/user$ exit
+exit
+user@test:~$ sudo visudo #Delete ivan ALL=(ALL) /bin/gpasswd
+user@test:~$ su ivan #Login to "ivan"
+Password: 
+ivan@test:/home/user$ sudo gpasswd -d ivan fake_group #Test access to gpasswd for "ivan" agian
+ivan is not in the sudoers file.  This incident will be reported.
+ivan@test:/home/user$ exit #Exit from "ivan"
+exit
+
+user@test:~$ sudo groupdel test_group #Delete group "test_group" #Delete group "test_group"
+
+#Then I clean test user and group. The End
