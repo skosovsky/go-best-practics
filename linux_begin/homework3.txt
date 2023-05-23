@@ -61,6 +61,6 @@ ivan is not in the sudoers file.  This incident will be reported.
 ivan@test:/home/user$ exit #Exit from "ivan"
 exit
 
-user@test:~$ sudo groupdel test_group #Delete group "test_group" #Delete group "test_group"
+user@test:~$ sudo groupdel test_group #Delete group "test_group"
 
 #Then I clean test user and group. The End
