@@ -57,11 +57,11 @@ CREATE TABLE streams(
 );
 
 CREATE TABLE grades(
-	teachers_id INTEGER NOT NULL,
+	teacher_id INTEGER NOT NULL,
 	stream_id INTEGER NOT NULL,
 	stream_grade INTEGER NOT NULL,
-	PRIMARY KEY (teachers_id, stream_id),
-	FOREIGN KEY (teachers_id) REFERENCES teachers(id), /* Many to One - много оценок на одного учителя */
+	PRIMARY KEY (teacher_id, stream_id),
+	FOREIGN KEY (teacher_id) REFERENCES teachers(id), /* Many to One - много оценок на одного учителя */
 	FOREIGN KEY (stream_id) REFERENCES streams(id) /* One to One - одна оценка на один поток */
 );
 
