@@ -35,6 +35,6 @@ WHERE performance < 4.8;
 
 SELECT
 	(SELECT AVG(performance) AS 'average_performance' FROM grades GROUP BY teacher_id ORDER BY average_performance DESC LIMIT 1)
--
+	-
 	(SELECT AVG(performance) AS 'average_performance' FROM grades GROUP BY teacher_id ORDER BY average_performance ASC LIMIT 1)
-AS 'difference_between_two_teachers';
+	AS 'difference_between_two_teachers';
