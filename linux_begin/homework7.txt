@@ -1,0 +1,20 @@
+lsb_release -cs #jammy
+
+#go to nginx.org :)
+sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring #ставим пакеты для репо
+curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null #импортируем ключ
+echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" | sudo tee /etc/apt/sources.list.d/nginx.list #добавляем репо
+sudo apt update #обновляем списки репо и их содержимое
+sudo apt download nginx #скачиваем nginx
+sudo dpkg -i nginx_1.24.0-1~jammy_arm64.deb #устанавливаем скачанный nginx
+sudo dpkg -r nginx #удаляем установленный nginx
+
+snap search whatsapp #ищем whatsapp
+sudo snap install kesty-whatsapp #устанавливаем клиент whatsapp
+sudo snap remove kesty-whatsapp #удаляем
+
+sudo iptables -P INPUT DROP
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
