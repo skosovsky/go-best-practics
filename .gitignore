@@ -1,4 +1,4 @@
 *.log
 tmp/*
 *.DS_Store
-/go_level1/.idea/**
+/go_level1/.idea/*
