@@ -1,5 +1,5 @@
 {
-  "value_one": "50",
-  "value_two": "70",
-  "value_three": "100"
+  "value_one": 1,
+  "value_two": 2,
+  "value_three": 3
 }
