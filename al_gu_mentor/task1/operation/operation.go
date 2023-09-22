@@ -3,6 +3,7 @@ package operation
 import (
 	"errors"
 	"fmt"
+	"math/big"
 	"strconv"
 )
 
@@ -11,7 +12,7 @@ func MathInt(valueOne int, valueTwo int, valueThree int, mathOperation string) (
 	case "*":
 		result = valueOne * valueTwo * valueThree
 	case "/":
-		if valueOne == 0 || valueTwo == 0 || valueThree == 0 {
+		if valueTwo == 0 || valueThree == 0 {
 			return 0, errors.New("division operation failed due to division by 0")
 		}
 		result = valueOne / valueTwo / valueThree
@@ -30,10 +31,10 @@ func MathUint(valueOne int, valueTwo int, valueThree int, mathOperation string) 
 	case "*":
 		result, err = strconv.ParseUint(fmt.Sprint(valueOne*valueTwo*valueThree), 10, 64)
 		if err != nil {
-			return 0, errors.New("Mul operation failed due to negative number")
+			return 0, errors.New("mul operation failed due to negative number")
 		}
 	case "/":
-		if valueOne == 0 || valueTwo == 0 || valueThree == 0 {
+		if valueTwo == 0 || valueThree == 0 {
 			return 0, errors.New("division operation failed due to division by 0")
 		}
 		result, err = strconv.ParseUint(fmt.Sprint(valueOne/valueTwo/valueThree), 10, 64)
@@ -43,12 +44,12 @@ func MathUint(valueOne int, valueTwo int, valueThree int, mathOperation string) 
 	case "-":
 		result, err = strconv.ParseUint(fmt.Sprint(valueOne-valueTwo-valueThree), 10, 64)
 		if err != nil {
-			return 0, errors.New("Diference operation failed due to negative number")
+			return 0, errors.New("subtract operation failed due to negative number")
 		}
 	case "+":
 		result, err = strconv.ParseUint(fmt.Sprint(valueOne+valueTwo+valueThree), 10, 64)
 		if err != nil {
-			return 0, errors.New("Sum operation failed due to negative number")
+			return 0, errors.New("sum operation failed due to negative number")
 		}
 	}
 
@@ -64,7 +65,7 @@ func MathFloat(valueOne float64, valueTwo float64, valueThree float64, mathOpera
 			result = 0
 		}
 	case "/":
-		if valueOne == 0 || valueTwo == 0 || valueThree == 0 {
+		if valueTwo == 0 || valueThree == 0 {
 			return 0, errors.New("division operation failed due to division by 0")
 		}
 		result = valueOne / valueTwo / valueThree
@@ -92,7 +93,7 @@ func MathString(valueOne int, valueTwo int, valueThree int, mathOperation string
 	case "*":
 		result = numbersToWords(strconv.Itoa(valueOne*valueTwo*valueThree), numToWord, cutFirstSymbol)
 	case "/":
-		if valueOne == 0 || valueTwo == 0 || valueThree == 0 {
+		if valueTwo == 0 || valueThree == 0 {
 			return "", errors.New("division operation failed due to division by 0")
 		}
 		result = numbersToWords(strconv.Itoa(valueOne/valueTwo/valueThree), numToWord, cutFirstSymbol)
@@ -159,7 +160,7 @@ func MathByte(valueOne int, valueTwo int, valueThree int, mathOperation string) 
 	case "*":
 		result = []byte(strconv.Itoa(valueOne * valueTwo * valueThree))
 	case "/":
-		if valueOne == 0 || valueTwo == 0 || valueThree == 0 {
+		if valueTwo == 0 || valueThree == 0 {
 			return nil, errors.New("division operation failed due to division by 0")
 		}
 		result = []byte(strconv.Itoa(valueOne / valueTwo / valueThree))
@@ -177,7 +178,7 @@ func MathRune(valueOne int, valueTwo int, valueThree int, mathOperation string) 
 	case "*":
 		result = []rune(strconv.Itoa(valueOne * valueTwo * valueThree))
 	case "/":
-		if valueOne == 0 || valueTwo == 0 || valueThree == 0 {
+		if valueTwo == 0 || valueThree == 0 {
 			return nil, errors.New("division operation failed due to division by 0")
 		}
 		result = []rune(strconv.Itoa(valueOne / valueTwo / valueThree))
@@ -186,6 +187,63 @@ func MathRune(valueOne int, valueTwo int, valueThree int, mathOperation string) 
 	case "+":
 		result = []rune(strconv.Itoa(valueOne + valueTwo + valueThree))
 	}
+	return result, err
+
+}
+
+func MathBigInt(valueOneBigInt big.Int, valueTwoBigInt big.Int, valueThreeBigInt big.Int, mathOperation string) (result big.Int, err error) {
+	switch mathOperation {
+	case "*":
+		result.Mul(result.Mul(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+	case "/":
+		if valueTwoBigInt.Text(10) == "0" || valueThreeBigInt.Text(10) == "0" {
+			return *big.NewInt(0), errors.New("division operation failed due to division by 0")
+		}
+		result.Div(result.Div(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+	case "-":
+		result.Sub(result.Sub(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+	case "+":
+		result.Add(result.Add(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+	}
+
+	return result, err
+
+}
+
+func MathBigFloat(valueOneBigInt big.Float, valueTwoBigInt big.Float, valueThreeBigInt big.Float, mathOperation string) (result big.Float, err error) {
+	switch mathOperation {
+	case "*":
+		result.Mul(result.Mul(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+	case "/":
+		if valueTwoBigInt.Text('f', 0) == "0" || valueThreeBigInt.Text('f', 0) == "0" {
+			return *big.NewFloat(0), errors.New("division operation failed due to division by 0")
+		}
+		result.Quo(result.Quo(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+	case "-":
+		result.Sub(result.Sub(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+	case "+":
+		result.Add(result.Add(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+	}
+
+	return result, err
+
+}
+
+func MathBigRat(valueOneBigRat big.Rat, valueTwoBigRat big.Rat, valueThreeBigRat big.Rat, mathOperation string) (result big.Rat, err error) {
+	switch mathOperation {
+	case "*":
+		result.Mul(result.Mul(&valueOneBigRat, &valueTwoBigRat), &valueThreeBigRat)
+	case "/":
+		if valueTwoBigRat.RatString() == "" || valueThreeBigRat.RatString() == "0" {
+			return *big.NewRat(0, 0), errors.New("division operation failed due to division by 0")
+		}
+		result.Quo(result.Quo(&valueOneBigRat, &valueTwoBigRat), &valueThreeBigRat)
+	case "-":
+		result.Sub(result.Sub(&valueOneBigRat, &valueTwoBigRat), &valueThreeBigRat)
+	case "+":
+		result.Add(result.Add(&valueOneBigRat, &valueTwoBigRat), &valueThreeBigRat)
+	}
+
 	return result, err
 
 }
