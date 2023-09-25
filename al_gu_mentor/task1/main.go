@@ -5,6 +5,7 @@ import (
 	"math/big"
 	"strconv"
 	"task1/entrance"
+	"task1/method"
 	"task1/operation"
 	"unsafe"
 )
@@ -375,4 +376,8 @@ func main() {
 
 	operation.AddOneNoPointer(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulUint), int(resultDivUint), int(resultSubUint), int(resultSumUint), int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
 	operation.AddOnePointer(&resultMulInt, &resultDivInt, &resultSubInt, &resultSumInt, &resultMulUintC, &resultDivUintC, &resultSubUintC, &resultSumUintC, &resultMulFloatC, &resultDivFloatC, &resultSubFloatC, &resultSumFloatC)
+
+	fmt.Println()
+	fmt.Println("result for Compare:")
+	method.CompareByMethod(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
 }
