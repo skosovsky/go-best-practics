@@ -20,7 +20,7 @@ func (c Creatures) CountBody(i int) int {
 }
 
 func (c Creatures) CountLimb(i int) int {
-	return c[i].Body + c[i].Tail
+	return c[i].Leg + c[i].Tail
 }
 
 func CompareByMethod(values ...int) {
@@ -50,9 +50,9 @@ func CompareByMethod(values ...int) {
 	for _, n := range values {
 		for i := 0; i < len(arr); i++ {
 			if arr[i].Creature == "улитка" {
-				if n > arr.CountLimb(i) {
+				if n > arr.CountBody(i) {
 					fmt.Println(n, "больше чем ног у", arr[i].Creature)
-				} else if n < arr.CountLimb(i) {
+				} else if n < arr.CountBody(i) {
 					fmt.Println(n, "меньше чем ног у", arr[i].Creature)
 				} else {
 					fmt.Println(n, "равен ногам у", arr[i].Creature)
@@ -67,5 +67,14 @@ func CompareByMethod(values ...int) {
 				}
 			}
 		}
+	}
+
+	// Это нужно вынести в отдельную функцию, но как не дублировать при этом структуры - я не понял
+	if arr.CountLimb(0) > arr.CountLimb(1) {
+		fmt.Println("у человека конечностей больше чем у собаки")
+	} else if arr.CountLimb(0) < arr.CountLimb(1) {
+		fmt.Println("у человека конечностей меньше чем у собаки")
+	} else {
+		fmt.Println("у человека столько же конечностей как и у собаки")
 	}
 }
