@@ -6,73 +6,74 @@ import (
 	"strconv"
 	"task1/entrance"
 	"task1/operation"
+	"unsafe"
+)
+
+var (
+	resultMulInt, resultDivInt, resultSubInt, resultSumInt             int
+	resultMulUint, resultDivUint, resultSubUint, resultSumUint         uint64
+	resultMulFloat, resultDivFloat, resultSubFloat, resultSumFloat     float64
+	resultMulString, resultDivString, resultSubString, resultSumString string
+	resultMulByte, resultDivByte, resultSubByte, resultSumByte         []byte
+	resultMulRune, resultDivRune, resultSubRune, resultSumRune         []rune
+	err                                                                error
+	resultIntStruct                                                    struct {
+		resultMul int
+		resultDiv int
+		resultSub int
+		resultSum int
+	}
+	resultUintStruct struct {
+		resultMul uint64
+		resultDiv uint64
+		resultSub uint64
+		resultSum uint64
+	}
+	resultFloatStruct struct {
+		resultMul float64
+		resultDiv float64
+		resultSub float64
+		resultSum float64
+	}
+	resultStringStruct struct {
+		resultMul string
+		resultDiv string
+		resultSub string
+		resultSum string
+	}
+	resultByteStruct struct {
+		resultMul []byte
+		resultDiv []byte
+		resultSub []byte
+		resultSum []byte
+	}
+	resultRuneStruct struct {
+		resultMul []rune
+		resultDiv []rune
+		resultSub []rune
+		resultSum []rune
+	}
+	resultBigIntStruct struct {
+		resultMul big.Int
+		resultDiv big.Int
+		resultSub big.Int
+		resultSum big.Int
+	}
+	resultBigFloatStruct struct {
+		resultMul big.Float
+		resultDiv big.Float
+		resultSub big.Float
+		resultSum big.Float
+	}
+	resultBigRatStruct struct {
+		resultMul big.Rat
+		resultDiv big.Rat
+		resultSub big.Rat
+		resultSum big.Rat
+	}
 )
 
 func main() {
-	var (
-		resultMulInt, resultDivInt, resultSubInt, resultSumInt             int
-		resultMulUint, resultDivUint, resultSubUint, resultSumUint         uint64
-		resultMulFloat, resultDivFloat, resultSubFloat, resultSumFloat     float64
-		resultMulString, resultDivString, resultSubString, resultSumString string
-		resultMulByte, resultDivByte, resultSubByte, resultSumByte         []byte
-		resultMulRune, resultDivRune, resultSubRune, resultSumRune         []rune
-		err                                                                error
-		resultIntStruct                                                    struct {
-			resultMul int
-			resultDiv int
-			resultSub int
-			resultSum int
-		}
-		resultUintStruct struct {
-			resultMul uint64
-			resultDiv uint64
-			resultSub uint64
-			resultSum uint64
-		}
-		resultFloatStruct struct {
-			resultMul float64
-			resultDiv float64
-			resultSub float64
-			resultSum float64
-		}
-		resultStringStruct struct {
-			resultMul string
-			resultDiv string
-			resultSub string
-			resultSum string
-		}
-		resultByteStruct struct {
-			resultMul []byte
-			resultDiv []byte
-			resultSub []byte
-			resultSum []byte
-		}
-		resultRuneStruct struct {
-			resultMul []rune
-			resultDiv []rune
-			resultSub []rune
-			resultSum []rune
-		}
-		resultBigIntStruct struct {
-			resultMul big.Int
-			resultDiv big.Int
-			resultSub big.Int
-			resultSum big.Int
-		}
-		resultBigFloatStruct struct {
-			resultMul big.Float
-			resultDiv big.Float
-			resultSub big.Float
-			resultSum big.Float
-		}
-		resultBigRatStruct struct {
-			resultMul big.Rat
-			resultDiv big.Rat
-			resultSub big.Rat
-			resultSum big.Rat
-		}
-	)
-
 	valueOne, valueTwo, valueThree := entrance.GetValue()
 
 	// Int
@@ -91,16 +92,16 @@ func main() {
 		"resultSubInt": resultSubInt,
 		"resultSumInt": resultSumInt,
 	}
-	fmt.Println(resultIntMap)
+	fmt.Printf("Var: %T, Size: %v\n", resultIntMap, unsafe.Sizeof(resultIntMap))
 
 	resultIntSlice := []int{resultMulInt, resultDivInt, resultSubInt, resultSumInt}
-	fmt.Println(resultIntSlice)
+	fmt.Printf("Var: %T, Size: %v\n", resultIntSlice, unsafe.Sizeof(resultIntSlice))
 
 	resultIntStruct.resultMul = resultMulInt
 	resultIntStruct.resultDiv = resultDivInt
 	resultIntStruct.resultSub = resultSubInt
 	resultIntStruct.resultSum = resultSumInt
-	fmt.Println(resultIntStruct)
+	fmt.Printf("Var: %T, Size: %v\n\n", resultIntStruct, unsafe.Sizeof(resultIntStruct))
 
 	// Uint
 	resultMulUint, err = operation.MathUint(valueOne, valueTwo, valueThree, "*")
@@ -127,16 +128,16 @@ func main() {
 		"resultSubUint": resultSubUint,
 		"resultSumUint": resultSumUint,
 	}
-	fmt.Println(resultUintMap)
+	fmt.Printf("Var: %T, Size: %v\n", resultUintMap, unsafe.Sizeof(resultUintMap))
 
 	resultUintSlice := []uint64{resultMulUint, resultDivUint, resultSubUint, resultSumUint}
-	fmt.Println(resultUintSlice)
+	fmt.Printf("Var: %T, Size: %v\n", resultUintSlice, unsafe.Sizeof(resultUintSlice))
 
 	resultUintStruct.resultMul = resultMulUint
 	resultUintStruct.resultDiv = resultDivUint
 	resultUintStruct.resultSub = resultSubUint
 	resultUintStruct.resultSum = resultSumUint
-	fmt.Println(resultUintStruct)
+	fmt.Printf("Var: %T, Size: %v\n\n", resultUintStruct, unsafe.Sizeof(resultUintStruct))
 
 	// Float (если форматирование не требуется, нужно удалить "%.3f", если positiveOnly = true - только положительные числа)
 	resultMulFloat, _ = operation.MathFloat(float64(valueOne), float64(valueTwo), float64(valueThree), "*", false)
@@ -161,16 +162,16 @@ func main() {
 		"resultSubFloat": resultSubFloat,
 		"resultSumFloat": resultSumFloat,
 	}
-	fmt.Println(resultFloatMap)
+	fmt.Printf("Var: %T, Size: %v\n", resultFloatMap, unsafe.Sizeof(resultFloatMap))
 
 	resultFloatSlice := []float64{resultMulFloat, resultDivFloat, resultSubFloat, resultSumFloat}
-	fmt.Println(resultFloatSlice)
+	fmt.Printf("Var: %T, Size: %v\n", resultFloatSlice, unsafe.Sizeof(resultFloatSlice))
 
 	resultFloatStruct.resultMul = resultMulFloat
 	resultFloatStruct.resultDiv = resultDivFloat
 	resultFloatStruct.resultSub = resultSubFloat
 	resultFloatStruct.resultSum = resultSumFloat
-	fmt.Println(resultFloatStruct)
+	fmt.Printf("Var: %T, Size: %v\n\n", resultFloatStruct, unsafe.Sizeof(resultFloatStruct))
 
 	// String (для перевода цифр в слова, используем numToWord, для обрезания cutFirstSymbol)
 	resultMulString, _ = operation.MathString(valueOne, valueTwo, valueThree, "*", false, false)
@@ -189,16 +190,16 @@ func main() {
 		"resultSubString": resultSubString,
 		"resultSumString": resultSumString,
 	}
-	fmt.Println(resultStringMap)
+	fmt.Printf("Var: %T, Size: %v\n", resultStringMap, unsafe.Sizeof(resultStringMap))
 
 	resultStringSlice := []string{resultMulString, resultDivString, resultSubString, resultSumString}
-	fmt.Println(resultStringSlice)
+	fmt.Printf("Var: %T, Size: %v\n", resultStringSlice, unsafe.Sizeof(resultStringSlice))
 
 	resultStringStruct.resultMul = resultMulString
 	resultStringStruct.resultDiv = resultDivString
 	resultStringStruct.resultSub = resultSubString
 	resultStringStruct.resultSum = resultSumString
-	fmt.Println(resultStringStruct)
+	fmt.Printf("Var: %T, Size: %v\n\n", resultStringStruct, unsafe.Sizeof(resultStringStruct))
 
 	// Byte
 	resultMulByte, _ = operation.MathByte(valueOne, valueTwo, valueThree, "*")
@@ -217,16 +218,16 @@ func main() {
 		"resultSubByte": resultSubByte,
 		"resultSumByte": resultSumByte,
 	}
-	fmt.Println(resultByteMap)
+	fmt.Printf("Var: %T, Size: %v\n", resultByteMap, unsafe.Sizeof(resultByteMap))
 
 	resultByteSlice := [][]byte{resultMulByte, resultDivByte, resultSubByte, resultSumByte}
-	fmt.Println(resultByteSlice)
+	fmt.Printf("Var: %T, Size: %v\n", resultByteSlice, unsafe.Sizeof(resultByteSlice))
 
 	resultByteStruct.resultMul = resultMulByte
 	resultByteStruct.resultDiv = resultDivByte
 	resultByteStruct.resultSub = resultSubByte
 	resultByteStruct.resultSum = resultSumByte
-	fmt.Println(resultByteStruct)
+	fmt.Printf("Var: %T, Size: %v\n\n", resultByteStruct, unsafe.Sizeof(resultByteStruct))
 
 	// Rune
 	resultMulRune, _ = operation.MathRune(valueOne, valueTwo, valueThree, "*")
@@ -246,16 +247,16 @@ func main() {
 		"resultSubRune": resultSubRune,
 		"resultSumRune": resultSumRune,
 	}
-	fmt.Println(resultRuneMap)
+	fmt.Printf("Var: %T, Size: %v\n", resultRuneMap, unsafe.Sizeof(resultRuneMap))
 
 	resultRuneSlice := [][]rune{resultMulRune, resultDivRune, resultSubRune, resultSumRune}
-	fmt.Println(resultRuneSlice)
+	fmt.Printf("Var: %T, Size: %v\n", resultRuneSlice, unsafe.Sizeof(resultRuneSlice))
 
 	resultRuneStruct.resultMul = resultMulRune
 	resultRuneStruct.resultDiv = resultDivRune
 	resultRuneStruct.resultSub = resultSubRune
 	resultRuneStruct.resultSum = resultSumRune
-	fmt.Println(resultRuneStruct)
+	fmt.Printf("Var: %T, Size: %v\n\n", resultRuneStruct, unsafe.Sizeof(resultRuneStruct))
 
 	// BigInt
 	valueOneBigInt, _ := new(big.Int).SetString("25000000000000000000", 10)
@@ -278,16 +279,16 @@ func main() {
 		"resultSubBigInt": resultSubBigInt,
 		"resultSumBigInt": resultSumBigInt,
 	}
-	fmt.Println(resultBigIntMap)
+	fmt.Printf("Var: %T, Size: %v\n", resultBigIntMap, unsafe.Sizeof(resultBigIntMap))
 
 	resultBigIntSlice := []big.Int{resultMulBigInt, resultDivBigInt, resultSubBigInt, resultSumBigInt}
-	fmt.Println(resultBigIntSlice)
+	fmt.Printf("Var: %T, Size: %v\n", resultBigIntSlice, unsafe.Sizeof(resultBigIntSlice))
 
 	resultBigIntStruct.resultMul = resultMulBigInt
 	resultBigIntStruct.resultDiv = resultDivBigInt
 	resultBigIntStruct.resultSub = resultSubBigInt
 	resultBigIntStruct.resultSum = resultSumBigInt
-	fmt.Println(resultBigIntStruct)
+	fmt.Printf("Var: %T, Size: %v\n\n", resultBigIntStruct, unsafe.Sizeof(resultBigIntStruct))
 
 	// BigFloat
 	valueOneBigFloat, _ := new(big.Float).SetString("25000000000000000000.555")
@@ -310,16 +311,16 @@ func main() {
 		"resultSubBigFloat": resultSubBigFloat,
 		"resultSumBigFloat": resultSumBigFloat,
 	}
-	fmt.Println(resultBigFloatMap)
+	fmt.Printf("Var: %T, Size: %v\n", resultBigFloatMap, unsafe.Sizeof(resultBigFloatMap))
 
 	resultBigFloatSlice := []big.Float{resultMulBigFloat, resultDivBigFloat, resultSubBigFloat, resultSumBigFloat}
-	fmt.Println(resultBigFloatSlice)
+	fmt.Printf("Var: %T, Size: %v\n", resultBigFloatSlice, unsafe.Sizeof(resultBigFloatSlice))
 
 	resultBigFloatStruct.resultMul = resultMulBigFloat
 	resultBigFloatStruct.resultDiv = resultDivBigFloat
 	resultBigFloatStruct.resultSub = resultSubBigFloat
 	resultBigFloatStruct.resultSum = resultSumBigFloat
-	fmt.Println(resultBigFloatStruct)
+	fmt.Printf("Var: %T, Size: %v\n\n", resultBigFloatStruct, unsafe.Sizeof(resultBigFloatStruct))
 
 	// BigRat
 	valueOneBigRat := big.NewRat(1, 3)
@@ -342,15 +343,36 @@ func main() {
 		"resultSubBigRat": resultSubBigRat,
 		"resultSumBigRat": resultSumBigRat,
 	}
-	fmt.Println(resultBigRatMap)
+	fmt.Printf("Var: %T, Size: %v\n", resultBigRatMap, unsafe.Sizeof(resultBigRatMap))
 
 	resultBigRatSlice := []big.Rat{resultMulBigRat, resultDivBigRat, resultSubBigRat, resultSumBigRat}
-	fmt.Println(resultBigRatSlice)
+	fmt.Printf("Var: %T, Size: %v\n", resultBigRatSlice, unsafe.Sizeof(resultBigRatSlice))
 
 	resultBigRatStruct.resultMul = resultMulBigRat
 	resultBigRatStruct.resultDiv = resultDivBigRat
 	resultBigRatStruct.resultSub = resultSubBigRat
 	resultBigRatStruct.resultSum = resultSumBigRat
-	fmt.Println(resultBigRatStruct)
+	fmt.Printf("Var: %T, Size: %v\n\n", resultBigRatStruct, unsafe.Sizeof(resultBigRatStruct))
 
+	// Вызов функции по указателям и без
+	fmt.Println("result fot Sum (many value):")
+	resultIntManyValue := operation.MathIntManyValue(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulUint), int(resultDivUint), int(resultSubUint), int(resultSumUint), int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+	fmt.Println(resultIntManyValue)
+
+	fmt.Println("result fot Sum (many value) - pointers:")
+
+	resultMulUintC := int(resultMulUint)
+	resultDivUintC := int(resultDivUint)
+	resultSubUintC := int(resultSubUint)
+	resultSumUintC := int(resultSumUint)
+	resultMulFloatC := int(resultMulFloat)
+	resultDivFloatC := int(resultDivFloat)
+	resultSubFloatC := int(resultSubFloat)
+	resultSumFloatC := int(resultSumFloat)
+
+	resultIntManyValuePointer := operation.MathIntManyValuePointer(&resultMulInt, &resultDivInt, &resultSubInt, &resultSumInt, &resultMulUintC, &resultDivUintC, &resultSubUintC, &resultSumUintC, &resultMulFloatC, &resultDivFloatC, &resultSubFloatC, &resultSumFloatC)
+	fmt.Println(*resultIntManyValuePointer)
+
+	operation.AddOneNoPointer(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulUint), int(resultDivUint), int(resultSubUint), int(resultSumUint), int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+	operation.AddOnePointer(&resultMulInt, &resultDivInt, &resultSubInt, &resultSumInt, &resultMulUintC, &resultDivUintC, &resultSubUintC, &resultSumUintC, &resultMulFloatC, &resultDivFloatC, &resultSubFloatC, &resultSumFloatC)
 }

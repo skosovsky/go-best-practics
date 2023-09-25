@@ -248,6 +248,35 @@ func MathBigRat(valueOneBigRat big.Rat, valueTwoBigRat big.Rat, valueThreeBigRat
 
 }
 
+func MathIntManyValue(values ...int) (result int) {
+	for _, n := range values {
+		result = result + n
+	}
+	return result
+}
+
+func MathIntManyValuePointer(values ...*int) (result *int) {
+	resultInt := 0
+	for _, n := range values {
+		resultInt = resultInt + *n
+	}
+	return &resultInt
+}
+
+// Функция не меняет значение переменной, т.к. работает с новыми переменными в своей области видимости
+func AddOneNoPointer(values ...int) {
+	for _, n := range values {
+		n = n + 1
+	}
+}
+
+// Функция изменяет значения переменной, т.к. обращается к самим переменным по поинтерам
+func AddOnePointer(values ...*int) {
+	for _, n := range values {
+		*n = *n + 1
+	}
+}
+
 //func cutFloat(floatNumber float64, cutNumber int) (cuttingFloat float64) {
 //	if cutNumber == -1 {
 //		return floatNumber
