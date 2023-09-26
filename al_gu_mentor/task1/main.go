@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/big"
 	"strconv"
+	"task1/bench"
 	"task1/entrance"
 	"task1/method"
 	"task1/operation"
@@ -380,4 +381,9 @@ func main() {
 	fmt.Println()
 	fmt.Println("result for Compare:")
 	method.CompareByMethod(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+
+	bench.Bench1()
+	bench.Bench2()
+	bench.Bench3()
+	bench.Bench4()
 }

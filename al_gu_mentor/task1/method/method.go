@@ -2,6 +2,29 @@ package method
 
 import "fmt"
 
+var (
+	man = Creature{
+		Creature: "человек",
+		Body:     1,
+		Leg:      2,
+		Tail:     0,
+	}
+
+	dog = Creature{
+		Creature: "собака",
+		Body:     1,
+		Leg:      4,
+		Tail:     1,
+	}
+
+	snail = Creature{
+		Creature: "улитка",
+		Body:     1,
+		Leg:      0,
+		Tail:     0,
+	}
+)
+
 type Creature struct {
 	Creature string
 	Body     int
@@ -24,26 +47,6 @@ func (c Creatures) CountLimb(i int) int {
 }
 
 func CompareByMethod(values ...int) {
-	man := Creature{
-		Creature: "человек",
-		Body:     1,
-		Leg:      2,
-		Tail:     0,
-	}
-
-	dog := Creature{
-		Creature: "собака",
-		Body:     1,
-		Leg:      4,
-		Tail:     1,
-	}
-
-	snail := Creature{
-		Creature: "улитка",
-		Body:     1,
-		Leg:      0,
-		Tail:     0,
-	}
 
 	arr := Creatures{man, dog, snail}
 
