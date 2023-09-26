@@ -371,18 +371,19 @@ func main() {
 	resultDivFloatC := int(resultDivFloat)
 	resultSubFloatC := int(resultSubFloat)
 	resultSumFloatC := int(resultSumFloat)
+	var resultIntManyValuePointer int
 
-	resultIntManyValuePointer := operation.MathIntManyValuePointer(&resultMulInt, &resultDivInt, &resultSubInt, &resultSumInt, &resultMulUintC, &resultDivUintC, &resultSubUintC, &resultSumUintC, &resultMulFloatC, &resultDivFloatC, &resultSubFloatC, &resultSumFloatC)
-	fmt.Println(*resultIntManyValuePointer)
+	operation.MathIntManyValuePointer(&resultIntManyValuePointer, &resultMulInt, &resultDivInt, &resultSubInt, &resultSumInt, &resultMulUintC, &resultDivUintC, &resultSubUintC, &resultSumUintC, &resultMulFloatC, &resultDivFloatC, &resultSubFloatC, &resultSumFloatC)
+	fmt.Println(resultIntManyValuePointer)
 
 	operation.AddOneNoPointer(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulUint), int(resultDivUint), int(resultSubUint), int(resultSumUint), int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
 	operation.AddOnePointer(&resultMulInt, &resultDivInt, &resultSubInt, &resultSumInt, &resultMulUintC, &resultDivUintC, &resultSubUintC, &resultSumUintC, &resultMulFloatC, &resultDivFloatC, &resultSubFloatC, &resultSumFloatC)
 
 	fmt.Println()
 	fmt.Println("result for Compare:")
-	method.Arr.CompareByLegs(0, resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
-	method.Arr.CompareByLegs(1, resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
-	method.Arr.CompareByLegs(2, resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+	method.Arr.CompareLegsByMan(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+	method.Arr.CompareLegsByDog(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+	method.Arr.CompareLegsBySnail(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
 	method.CompareLImb()
 
 	bench.Bench1()

@@ -35,26 +35,39 @@ type Creature struct {
 
 type Creatures []Creature
 
-func (c Creatures) CompareByLegs(i int, values ...int) {
+func (c Creatures) CompareLegsByMan(values ...int) {
 	for _, n := range values {
-		if i == 2 {
-			if n > Arr[i].Leg+Arr[i].Body {
-				fmt.Println(n, "больше чем ног у", Arr[i].Creature)
-			} else if n < Arr[i].Leg+Arr[i].Body {
-				fmt.Println(n, "меньше чем ног у", Arr[i].Creature)
-			} else {
-				fmt.Println(n, "равен ногам у", Arr[i].Creature)
-			}
+		if n > Arr[0].Leg {
+			fmt.Println(n, "больше чем ног у человека")
+		} else if n < Arr[0].Leg {
+			fmt.Println(n, "меньше чем ног у человека")
 		} else {
-			if n > Arr[i].Leg {
-				fmt.Println(n, "больше чем ног у", Arr[i].Creature)
-			} else if n < Arr[i].Leg {
-				fmt.Println(n, "меньше чем ног у", Arr[i].Creature)
-			} else {
-				fmt.Println(n, "равен ногам у", Arr[i].Creature)
-			}
+			fmt.Println(n, "равен ногам у человека")
 		}
+	}
+}
 
+func (c Creatures) CompareLegsByDog(values ...int) {
+	for _, n := range values {
+		if n > Arr[1].Leg {
+			fmt.Println(n, "больше чем ног у собаки")
+		} else if n < Arr[1].Leg {
+			fmt.Println(n, "меньше чем ног у собаки")
+		} else {
+			fmt.Println(n, "равен ногам у собаки")
+		}
+	}
+}
+
+func (c Creatures) CompareLegsBySnail(values ...int) {
+	for _, n := range values {
+		if n > Arr[2].Leg+Arr[2].Body {
+			fmt.Println(n, "больше чем ног у улитки")
+		} else if n < Arr[2].Leg+Arr[2].Body {
+			fmt.Println(n, "меньше чем ног у улитки")
+		} else {
+			fmt.Println(n, "равен ногам у улитки")
+		}
 	}
 }
 

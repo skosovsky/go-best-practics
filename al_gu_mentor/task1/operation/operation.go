@@ -255,12 +255,10 @@ func MathIntManyValue(values ...int) (result int) {
 	return result
 }
 
-func MathIntManyValuePointer(values ...*int) (result *int) {
-	resultInt := 0
+func MathIntManyValuePointer(result *int, values ...*int) {
 	for _, n := range values {
-		resultInt = resultInt + *n
+		*result = *result + *n
 	}
-	return &resultInt
 }
 
 // Функция не меняет значение переменной, т.к. работает с новыми переменными в своей области видимости
