@@ -380,7 +380,10 @@ func main() {
 
 	fmt.Println()
 	fmt.Println("result for Compare:")
-	method.CompareByMethod(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+	method.Arr.CompareByLegs(0, resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+	method.Arr.CompareByLegs(1, resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+	method.Arr.CompareByLegs(2, resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+	method.CompareLImb()
 
 	bench.Bench1()
 	bench.Bench2()

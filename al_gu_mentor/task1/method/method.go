@@ -23,6 +23,7 @@ var (
 		Leg:      0,
 		Tail:     0,
 	}
+	Arr = Creatures{man, dog, snail}
 )
 
 type Creature struct {
@@ -34,48 +35,37 @@ type Creature struct {
 
 type Creatures []Creature
 
-func (c Creatures) CountLegs(i int) int {
-	return c[i].Leg
-}
+func (c Creatures) CompareByLegs(i int, values ...int) {
+	for _, n := range values {
+		if i == 2 {
+			if n > Arr[i].Leg+Arr[i].Body {
+				fmt.Println(n, "больше чем ног у", Arr[i].Creature)
+			} else if n < Arr[i].Leg+Arr[i].Body {
+				fmt.Println(n, "меньше чем ног у", Arr[i].Creature)
+			} else {
+				fmt.Println(n, "равен ногам у", Arr[i].Creature)
+			}
+		} else {
+			if n > Arr[i].Leg {
+				fmt.Println(n, "больше чем ног у", Arr[i].Creature)
+			} else if n < Arr[i].Leg {
+				fmt.Println(n, "меньше чем ног у", Arr[i].Creature)
+			} else {
+				fmt.Println(n, "равен ногам у", Arr[i].Creature)
+			}
+		}
 
-func (c Creatures) CountBody(i int) int {
-	return c[i].Body
+	}
 }
 
 func (c Creatures) CountLimb(i int) int {
 	return c[i].Leg + c[i].Tail
 }
 
-func CompareByMethod(values ...int) {
-
-	arr := Creatures{man, dog, snail}
-
-	for _, n := range values {
-		for i := 0; i < len(arr); i++ {
-			if arr[i].Creature == "улитка" {
-				if n > arr.CountBody(i) {
-					fmt.Println(n, "больше чем ног у", arr[i].Creature)
-				} else if n < arr.CountBody(i) {
-					fmt.Println(n, "меньше чем ног у", arr[i].Creature)
-				} else {
-					fmt.Println(n, "равен ногам у", arr[i].Creature)
-				}
-			} else {
-				if n > arr.CountLegs(i) {
-					fmt.Println(n, "больше чем ног у", arr[i].Creature)
-				} else if n < arr.CountLegs(i) {
-					fmt.Println(n, "меньше чем ног у", arr[i].Creature)
-				} else {
-					fmt.Println(n, "равен ногам у", arr[i].Creature)
-				}
-			}
-		}
-	}
-
-	// Это нужно вынести в отдельную функцию, но как не дублировать при этом структуры - я не понял
-	if arr.CountLimb(0) > arr.CountLimb(1) {
+func CompareLImb() {
+	if Arr.CountLimb(0) > Arr.CountLimb(1) {
 		fmt.Println("у человека конечностей больше чем у собаки")
-	} else if arr.CountLimb(0) < arr.CountLimb(1) {
+	} else if Arr.CountLimb(0) < Arr.CountLimb(1) {
 		fmt.Println("у человека конечностей меньше чем у собаки")
 	} else {
 		fmt.Println("у человека столько же конечностей как и у собаки")
