@@ -73,6 +73,30 @@ var (
 		resultSub big.Rat
 		resultSum big.Rat
 	}
+	human = method.Human{
+		Title: "человек",
+		Leg:   2,
+	}
+	dog = method.Dog{
+		Title: "собака",
+		Paw:   4,
+		Tail:  1,
+	}
+	snail = method.Snail{
+		Title: "улитка",
+		Leg:   1,
+	}
+	ArrMammals = method.Mammals{
+		Human: method.Human{
+			Title: human.Title,
+			Leg:   human.Leg,
+		},
+		Dog: method.Dog{
+			Title: dog.Title,
+			Paw:   dog.Paw,
+			Tail:  dog.Tail,
+		},
+	}
 )
 
 func main() {
@@ -381,10 +405,10 @@ func main() {
 
 	fmt.Println()
 	fmt.Println("result for Compare:")
-	method.Arr.CompareLegsByMan(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
-	method.Arr.CompareLegsByDog(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
-	method.Arr.CompareLegsBySnail(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
-	method.CompareLImb()
+	human.CompareWithLegs(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+	dog.CompareWithsPaws(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+	snail.CompareWithLegs(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
+	ArrMammals.CompareLimb()
 
 	bench.Bench1()
 	bench.Bench2()
