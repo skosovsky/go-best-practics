@@ -3,6 +3,7 @@ package operation
 import (
 	"errors"
 	"fmt"
+	"log"
 	"math/big"
 	"strconv"
 )
@@ -273,6 +274,18 @@ func AddOnePointer(values ...*int) {
 	for _, n := range values {
 		*n = *n + 1
 	}
+}
+
+func DivByZero() {
+	var a int
+	defer func() {
+		if err := recover(); err != nil {
+			err = errors.New("divide by zero")
+			log.Println("ooops:", err)
+		}
+	}()
+
+	a = a / a
 }
 
 //func cutFloat(floatNumber float64, cutNumber int) (cuttingFloat float64) {

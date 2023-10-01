@@ -8,6 +8,7 @@ import (
 	"task1/entrance"
 	"task1/method"
 	"task1/operation"
+	"task1/output"
 	"unsafe"
 )
 
@@ -86,7 +87,7 @@ var (
 		Title: "улитка",
 		Leg:   1,
 	}
-	ArrMammals = method.Mammals{
+	StructMammals = method.Mammals{
 		Human: method.Human{
 			Title: human.Title,
 			Leg:   human.Leg,
@@ -408,7 +409,10 @@ func main() {
 	human.CompareWithLegs(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
 	dog.CompareWithsPaws(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
 	snail.CompareWithLegs(resultMulInt, resultDivInt, resultSubInt, resultSumInt, int(resultMulFloat), int(resultDivFloat), int(resultSubFloat), int(resultSumFloat))
-	ArrMammals.CompareLimb()
+	StructMammals.CompareLimb()
+
+	operation.DivByZero()
+	output.SaveToNewFile("result.txt", strconv.Itoa(resultMulInt), strconv.Itoa(resultDivInt), strconv.Itoa(resultSubInt), strconv.Itoa(resultSumInt), strconv.FormatUint(resultMulUint, 10), strconv.FormatUint(resultDivUint, 10), strconv.FormatUint(resultSubUint, 10), strconv.FormatUint(resultSumUint, 10), strconv.FormatFloat(resultMulFloat, 'f', -1, 64), strconv.FormatFloat(resultDivFloat, 'f', -1, 64), strconv.FormatFloat(resultSubFloat, 'f', -1, 64), strconv.FormatFloat(resultSumFloat, 'f', -1, 64), resultMulString, resultDivString, resultSubString, resultSumString, string(resultMulByte), string(resultDivByte), string(resultSubByte), string(resultSumByte), string(resultMulRune), string(resultDivRune), string(resultSubRune), string(resultSumRune))
 
 	bench.Bench1()
 	bench.Bench2()
