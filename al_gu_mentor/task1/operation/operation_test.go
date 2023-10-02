@@ -1,6 +1,10 @@
 package operation
 
-import "testing"
+import (
+	"math/big"
+	"reflect"
+	"testing"
+)
 
 func BenchmarkMathIntManyValue(b *testing.B) {
 	var a1, a2, a3, a4 int = 10, 100, -200, -10
@@ -62,3 +66,941 @@ func BenchmarkMathIntManyValuePointerNoInt(b *testing.B) {
 //BenchmarkMathIntManyValuePointer-10             147734468                8.141 ns/op
 //BenchmarkMathIntManyValueNoInt-10               320508895                3.729 ns/op
 //BenchmarkMathIntManyValuePointerNoInt-10        237164148                5.071 ns/op
+
+func TestMathInt(t *testing.T) {
+	type args struct {
+		valueOne      int
+		valueTwo      int
+		valueThree    int
+		mathOperation string
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantResult int
+		wantErr    bool
+	}{
+		{
+			name: "* 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "*",
+			},
+			wantResult: 0,
+			wantErr:    false,
+		}, {
+			name: "* 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "*",
+			},
+			wantResult: 1,
+			wantErr:    false,
+		},
+		{
+			name: "* -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "*",
+			},
+			wantResult: -1,
+			wantErr:    false,
+		},
+		{
+			name: "/ 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "/",
+			},
+			wantResult: 0,
+			wantErr:    true,
+		}, {
+			name: "/ 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "/",
+			},
+			wantResult: 1,
+			wantErr:    false,
+		},
+		{
+			name: "/ -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "/",
+			},
+			wantResult: -1,
+			wantErr:    false,
+		},
+		{
+			name: "- 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "-",
+			},
+			wantResult: 0,
+			wantErr:    false,
+		}, {
+			name: "- 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "-",
+			},
+			wantResult: -1,
+			wantErr:    false,
+		},
+		{
+			name: "- -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "-",
+			},
+			wantResult: 1,
+			wantErr:    false,
+		},
+		{
+			name: "+ 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "+",
+			},
+			wantResult: 0,
+			wantErr:    false,
+		}, {
+			name: "+ 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "+",
+			},
+			wantResult: 3,
+			wantErr:    false,
+		},
+		{
+			name: "+ -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "+",
+			},
+			wantResult: -3,
+			wantErr:    false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotResult, err := MathInt(tt.args.valueOne, tt.args.valueTwo, tt.args.valueThree, tt.args.mathOperation)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MathInt() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if gotResult != tt.wantResult {
+				t.Errorf("MathInt() gotResult = %v, want %v", gotResult, tt.wantResult)
+			}
+		})
+	}
+}
+
+func TestMathUint(t *testing.T) {
+	type args struct {
+		valueOne      int
+		valueTwo      int
+		valueThree    int
+		mathOperation string
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantResult uint64
+		wantErr    bool
+	}{
+		{
+			name: "* 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "*",
+			},
+			wantResult: 0,
+			wantErr:    false,
+		}, {
+			name: "* 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "*",
+			},
+			wantResult: 1,
+			wantErr:    false,
+		},
+		{
+			name: "* -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "*",
+			},
+			wantResult: 0,
+			wantErr:    true,
+		},
+		{
+			name: "/ 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "/",
+			},
+			wantResult: 0,
+			wantErr:    true,
+		}, {
+			name: "/ 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "/",
+			},
+			wantResult: 1,
+			wantErr:    false,
+		},
+		{
+			name: "/ -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "/",
+			},
+			wantResult: 0,
+			wantErr:    true,
+		},
+		{
+			name: "- 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "-",
+			},
+			wantResult: 0,
+			wantErr:    false,
+		}, {
+			name: "- 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "-",
+			},
+			wantResult: 0,
+			wantErr:    true,
+		},
+		{
+			name: "- -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "-",
+			},
+			wantResult: 1,
+			wantErr:    false,
+		},
+		{
+			name: "+ 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "+",
+			},
+			wantResult: 0,
+			wantErr:    false,
+		}, {
+			name: "+ 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "+",
+			},
+			wantResult: 3,
+			wantErr:    false,
+		},
+		{
+			name: "+ -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "+",
+			},
+			wantResult: 0,
+			wantErr:    true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotResult, err := MathUint(tt.args.valueOne, tt.args.valueTwo, tt.args.valueThree, tt.args.mathOperation)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MathUint() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if gotResult != tt.wantResult {
+				t.Errorf("MathUint() gotResult = %v, want %v", gotResult, tt.wantResult)
+			}
+		})
+	}
+}
+
+func TestMathFloat(t *testing.T) {
+	type args struct {
+		valueOne      float64
+		valueTwo      float64
+		valueThree    float64
+		mathOperation string
+		positiveOnly  bool
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantResult float64
+		wantErr    bool
+	}{
+		{
+			name: "* 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "*",
+			},
+			wantResult: 0,
+			wantErr:    false,
+		}, {
+			name: "* 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "*",
+			},
+			wantResult: 1,
+			wantErr:    false,
+		},
+		{
+			name: "* -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "*",
+			},
+			wantResult: -1,
+			wantErr:    false,
+		},
+		{
+			name: "/ 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "/",
+			},
+			wantResult: 0,
+			wantErr:    true,
+		}, {
+			name: "/ 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "/",
+			},
+			wantResult: 1,
+			wantErr:    false,
+		},
+		{
+			name: "/ -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "/",
+			},
+			wantResult: -1,
+			wantErr:    false,
+		},
+		{
+			name: "- 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "-",
+			},
+			wantResult: 0,
+			wantErr:    false,
+		}, {
+			name: "- 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "-",
+			},
+			wantResult: -1,
+			wantErr:    false,
+		},
+		{
+			name: "- -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "-",
+			},
+			wantResult: 1,
+			wantErr:    false,
+		},
+		{
+			name: "+ 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "+",
+			},
+			wantResult: 0,
+			wantErr:    false,
+		}, {
+			name: "+ 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "+",
+			},
+			wantResult: 3,
+			wantErr:    false,
+		},
+		{
+			name: "+ -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "+",
+			},
+			wantResult: -3,
+			wantErr:    false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotResult, err := MathFloat(tt.args.valueOne, tt.args.valueTwo, tt.args.valueThree, tt.args.mathOperation, tt.args.positiveOnly)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MathFloat() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if gotResult != tt.wantResult {
+				t.Errorf("MathFloat() gotResult = %v, want %v", gotResult, tt.wantResult)
+			}
+		})
+	}
+}
+
+func TestMathString(t *testing.T) {
+	type args struct {
+		valueOne       int
+		valueTwo       int
+		valueThree     int
+		mathOperation  string
+		numToWord      bool
+		cutFirstSymbol bool
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantResult string
+		wantErr    bool
+	}{
+		{
+			name: "* 0",
+			args: args{
+				valueOne:       0,
+				valueTwo:       0,
+				valueThree:     0,
+				mathOperation:  "*",
+				numToWord:      false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "0",
+			wantErr:    false,
+		},
+		{
+			name: "* 1",
+			args: args{
+				valueOne:       1,
+				valueTwo:       1,
+				valueThree:     1,
+				mathOperation:  "*",
+				numToWord:      false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "1",
+			wantErr:    false,
+		},
+		{
+			name: "* -1",
+			args: args{
+				valueOne:       -1,
+				valueTwo:       -1,
+				valueThree:     -1,
+				mathOperation:  "*",
+				numToWord:      false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "-1",
+			wantErr:    false,
+		},
+		{
+			name: "* 5 word",
+			args: args{
+				valueOne:       5,
+				valueTwo:       5,
+				valueThree:     5,
+				mathOperation:  "*",
+				numToWord:      true,
+				cutFirstSymbol: false,
+			},
+			wantResult: "один два пять",
+			wantErr:    false,
+		},
+		{
+			name: "* 5 word without first",
+			args: args{
+				valueOne:       5,
+				valueTwo:       5,
+				valueThree:     5,
+				mathOperation:  "*",
+				numToWord:      true,
+				cutFirstSymbol: true,
+			},
+			wantResult: "дин ва ять",
+			wantErr:    false,
+		},
+		{
+			name: "* -5 word",
+			args: args{
+				valueOne:       -5,
+				valueTwo:       -5,
+				valueThree:     -5,
+				mathOperation:  "*",
+				numToWord:      true,
+				cutFirstSymbol: false,
+			},
+			wantResult: "минус один два пять",
+			wantErr:    false,
+		},
+		{
+			name: "* -5 word without first",
+			args: args{
+				valueOne:       -5,
+				valueTwo:       -5,
+				valueThree:     -5,
+				mathOperation:  "*",
+				numToWord:      true,
+				cutFirstSymbol: true,
+			},
+			wantResult: "инус дин ва ять",
+			wantErr:    false,
+		},
+		{
+			name: "/ 0",
+			args: args{
+				valueOne:       0,
+				valueTwo:       0,
+				valueThree:     0,
+				mathOperation:  "/",
+				numToWord:      false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "",
+			wantErr:    true,
+		},
+		{
+			name: "/ 1",
+			args: args{
+				valueOne:       1,
+				valueTwo:       1,
+				valueThree:     1,
+				mathOperation:  "/",
+				numToWord:      false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "1",
+			wantErr:    false,
+		},
+		{
+			name: "/ -1",
+			args: args{
+				valueOne:       -1,
+				valueTwo:       -1,
+				valueThree:     -1,
+				mathOperation:  "/",
+				numToWord:      false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "-1",
+			wantErr:    false,
+		},
+		{
+			name: "- 0",
+			args: args{
+				valueOne:       0,
+				valueTwo:       0,
+				valueThree:     0,
+				mathOperation:  "-",
+				numToWord:      false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "0",
+			wantErr:    false,
+		},
+		{
+			name: "- 1",
+			args: args{
+				valueOne:       1,
+				valueTwo:       1,
+				valueThree:     1,
+				mathOperation:  "-",
+				numToWord:      false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "-1",
+			wantErr:    false,
+		},
+		{
+			name: "- -1",
+			args: args{
+				valueOne:       -1,
+				valueTwo:       -1,
+				valueThree:     -1,
+				mathOperation:  "-",
+				numToWord:      false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "1",
+			wantErr:    false,
+		},
+		{
+			name: "+ 0",
+			args: args{
+				valueOne:       0,
+				valueTwo:       0,
+				valueThree:     0,
+				mathOperation:  "+",
+				numToWord:      false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "0",
+			wantErr:    false,
+		},
+		{
+			name: "+ 1",
+			args: args{
+				valueOne:       1,
+				valueTwo:       1,
+				valueThree:     1,
+				mathOperation:  "+",
+				numToWord:      false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "3",
+			wantErr:    false,
+		},
+		{
+			name: "+ -1",
+			args: args{
+				valueOne:       -1,
+				valueTwo:       -1,
+				valueThree:     -1,
+				mathOperation:  "+",
+				numToWord:      false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "-3",
+			wantErr:    false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotResult, err := MathString(tt.args.valueOne, tt.args.valueTwo, tt.args.valueThree, tt.args.mathOperation, tt.args.numToWord, tt.args.cutFirstSymbol)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MathString() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if gotResult != tt.wantResult {
+				t.Errorf("MathString() gotResult = %v, want %v", gotResult, tt.wantResult)
+			}
+		})
+	}
+}
+
+func Test_numbersToWords(t *testing.T) {
+	type args struct {
+		value          string
+		numToWords     bool
+		cutFirstSymbol bool
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantResult string
+	}{
+		{
+			name: "1",
+			args: args{
+				value:          "1",
+				numToWords:     false,
+				cutFirstSymbol: false,
+			},
+			wantResult: "1",
+		},
+		{
+			name: "12 words",
+			args: args{
+				value:          "12",
+				numToWords:     true,
+				cutFirstSymbol: false,
+			},
+			wantResult: "один два",
+		},
+		{
+			name: "-12 words cut",
+			args: args{
+				value:          "-12",
+				numToWords:     true,
+				cutFirstSymbol: true,
+			},
+			wantResult: "инус дин ва",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if gotResult := numbersToWords(tt.args.value, tt.args.numToWords, tt.args.cutFirstSymbol); gotResult != tt.wantResult {
+				t.Errorf("numbersToWords() = %v, want %v", gotResult, tt.wantResult)
+			}
+		})
+	}
+}
+
+func TestMathByte(t *testing.T) {
+	type args struct {
+		valueOne      int
+		valueTwo      int
+		valueThree    int
+		mathOperation string
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantResult []byte
+		wantErr    bool
+	}{
+		{
+			name: "* 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "*",
+			},
+			wantResult: []byte{48},
+			wantErr:    false,
+		},
+		{
+			name: "/ 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "/",
+			},
+			wantResult: nil,
+			wantErr:    true,
+		},
+		{
+			name: "* 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "*",
+			},
+			wantResult: []byte{49},
+			wantErr:    false,
+		},
+		{
+			name: "* -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "*",
+			},
+			wantResult: []byte{45, 49},
+			wantErr:    false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotResult, err := MathByte(tt.args.valueOne, tt.args.valueTwo, tt.args.valueThree, tt.args.mathOperation)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MathByte() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(gotResult, tt.wantResult) {
+				t.Errorf("MathByte() gotResult = %v, want %v", gotResult, tt.wantResult)
+			}
+		})
+	}
+}
+
+func TestMathRune(t *testing.T) {
+	type args struct {
+		valueOne      int
+		valueTwo      int
+		valueThree    int
+		mathOperation string
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantResult []rune
+		wantErr    bool
+	}{
+		{
+			name: "* 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "*",
+			},
+			wantResult: []rune{48},
+			wantErr:    false,
+		},
+		{
+			name: "/ 0",
+			args: args{
+				valueOne:      0,
+				valueTwo:      0,
+				valueThree:    0,
+				mathOperation: "/",
+			},
+			wantResult: nil,
+			wantErr:    true,
+		},
+		{
+			name: "* 1",
+			args: args{
+				valueOne:      1,
+				valueTwo:      1,
+				valueThree:    1,
+				mathOperation: "*",
+			},
+			wantResult: []rune{49},
+			wantErr:    false,
+		},
+		{
+			name: "* -1",
+			args: args{
+				valueOne:      -1,
+				valueTwo:      -1,
+				valueThree:    -1,
+				mathOperation: "*",
+			},
+			wantResult: []rune{45, 49},
+			wantErr:    false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotResult, err := MathRune(tt.args.valueOne, tt.args.valueTwo, tt.args.valueThree, tt.args.mathOperation)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MathRune() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(gotResult, tt.wantResult) {
+				t.Errorf("MathRune() gotResult = %v, want %v", gotResult, tt.wantResult)
+			}
+		})
+	}
+}
+
+func TestMathBigInt(t *testing.T) {
+	type args struct {
+		valueOneBigInt   big.Int
+		valueTwoBigInt   big.Int
+		valueThreeBigInt big.Int
+		mathOperation    string
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantResult big.Int
+		wantErr    bool
+	}{
+		{
+			name: "* 0",
+			args: args{
+				valueOneBigInt:   big.Int{false, []big.Word{1}},
+				valueTwoBigInt:   big.Int{0},
+				valueThreeBigInt: big.Int{0},
+				mathOperation:    "*",
+			},
+			wantResult: big.Int{},
+			wantErr:    false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotResult, err := MathBigInt(tt.args.valueOneBigInt, tt.args.valueTwoBigInt, tt.args.valueThreeBigInt, tt.args.mathOperation)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MathBigInt() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(gotResult, tt.wantResult) {
+				t.Errorf("MathBigInt() gotResult = %v, want %v", gotResult, tt.wantResult)
+			}
+		})
+	}
+}

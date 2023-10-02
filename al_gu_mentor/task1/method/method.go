@@ -23,6 +23,10 @@ type Mammals struct {
 	Dog
 }
 
+//type Talker interface {
+//	Talk()
+//}
+
 func (h Human) CompareWithLegs(values ...int) {
 	for _, n := range values {
 		if n > h.Leg {
@@ -67,4 +71,12 @@ func (m Mammals) CompareLimb() {
 	} else {
 		fmt.Println("у человека столько же конечностей как и у собаки")
 	}
+}
+
+func (h Human) Talk() {
+	fmt.Println("человек говорит привет")
+}
+
+func (d Dog) Talk() {
+	fmt.Println("собака гавкает гав")
 }
