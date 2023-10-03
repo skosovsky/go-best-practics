@@ -1011,10 +1011,10 @@ func TestMathBigInt(t *testing.T) {
 }
 
 func TestMathBigFloat(t *testing.T) {
-	valueOneBigFloat, _ := new(big.Float).SetString("1.1")
+	valueOneBigFloat, _ := new(big.Float).SetString("1.0")
 	valueTwoBigFloat, _ := new(big.Float).SetString("1.0")
 	valueThreeBigFloat, _ := new(big.Float).SetString("1.0")
-	resultBigFloat, _ := new(big.Float).SetString("1.1")
+	resultBigFloat, _ := new(big.Float).SetString("1.0")
 
 	type args struct {
 		valueOneBigInt   big.Float
@@ -1049,6 +1049,50 @@ func TestMathBigFloat(t *testing.T) {
 			}
 			if !reflect.DeepEqual(gotResult, tt.wantResult) {
 				t.Errorf("MathBigFloat() gotResult = %v, want %v", gotResult, tt.wantResult)
+			}
+		})
+	}
+}
+
+func TestMathBigRat(t *testing.T) {
+	valueOneBigRat := big.NewRat(1, 3)
+	valueTwoBigRat := big.NewRat(1, 3)
+	valueThreeBigRat := big.NewRat(1, 3)
+	valueBigRat := big.NewRat(1, 1)
+
+	type args struct {
+		valueOneBigRat   big.Rat
+		valueTwoBigRat   big.Rat
+		valueThreeBigRat big.Rat
+		mathOperation    string
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantResult big.Rat
+		wantErr    bool
+	}{
+		{
+			name: "",
+			args: args{
+				valueOneBigRat:   *valueOneBigRat,
+				valueTwoBigRat:   *valueTwoBigRat,
+				valueThreeBigRat: *valueThreeBigRat,
+				mathOperation:    "+",
+			},
+			wantResult: *valueBigRat,
+			wantErr:    false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotResult, err := MathBigRat(tt.args.valueOneBigRat, tt.args.valueTwoBigRat, tt.args.valueThreeBigRat, tt.args.mathOperation)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MathBigRat() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(gotResult, tt.wantResult) {
+				t.Errorf("MathBigRat() gotResult = %v, want %v", gotResult, tt.wantResult)
 			}
 		})
 	}

@@ -23,10 +23,6 @@ type Mammals struct {
 	Dog
 }
 
-//type Talker interface {
-//	Talk()
-//}
-
 func (h Human) CompareWithLegs(values ...int) {
 	for _, n := range values {
 		if n > h.Leg {
