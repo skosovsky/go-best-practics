@@ -967,6 +967,11 @@ func TestMathRune(t *testing.T) {
 }
 
 func TestMathBigInt(t *testing.T) {
+	valueOneBigInt, _ := new(big.Int).SetString("1", 10)
+	valueTwoBigInt, _ := new(big.Int).SetString("1", 10)
+	valueThreeBigInt, _ := new(big.Int).SetString("1", 10)
+	resultBigInt, _ := new(big.Int).SetString("1", 10)
+
 	type args struct {
 		valueOneBigInt   big.Int
 		valueTwoBigInt   big.Int
@@ -980,14 +985,14 @@ func TestMathBigInt(t *testing.T) {
 		wantErr    bool
 	}{
 		{
-			name: "* 0",
+			name: "* 1",
 			args: args{
-				valueOneBigInt:   big.Int{false, []big.Word{1}},
-				valueTwoBigInt:   big.Int{0},
-				valueThreeBigInt: big.Int{0},
+				valueOneBigInt:   *valueOneBigInt,
+				valueTwoBigInt:   *valueTwoBigInt,
+				valueThreeBigInt: *valueThreeBigInt,
 				mathOperation:    "*",
 			},
-			wantResult: big.Int{},
+			wantResult: *resultBigInt,
 			wantErr:    false,
 		},
 	}
@@ -1000,6 +1005,50 @@ func TestMathBigInt(t *testing.T) {
 			}
 			if !reflect.DeepEqual(gotResult, tt.wantResult) {
 				t.Errorf("MathBigInt() gotResult = %v, want %v", gotResult, tt.wantResult)
+			}
+		})
+	}
+}
+
+func TestMathBigFloat(t *testing.T) {
+	valueOneBigFloat, _ := new(big.Float).SetString("1.1")
+	valueTwoBigFloat, _ := new(big.Float).SetString("1.0")
+	valueThreeBigFloat, _ := new(big.Float).SetString("1.0")
+	resultBigFloat, _ := new(big.Float).SetString("1.1")
+
+	type args struct {
+		valueOneBigInt   big.Float
+		valueTwoBigInt   big.Float
+		valueThreeBigInt big.Float
+		mathOperation    string
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantResult big.Float
+		wantErr    bool
+	}{
+		{
+			name: "* 1",
+			args: args{
+				valueOneBigInt:   *valueOneBigFloat,
+				valueTwoBigInt:   *valueTwoBigFloat,
+				valueThreeBigInt: *valueThreeBigFloat,
+				mathOperation:    "*",
+			},
+			wantResult: *resultBigFloat,
+			wantErr:    false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotResult, err := MathBigFloat(tt.args.valueOneBigInt, tt.args.valueTwoBigInt, tt.args.valueThreeBigInt, tt.args.mathOperation)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MathBigFloat() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(gotResult, tt.wantResult) {
+				t.Errorf("MathBigFloat() gotResult = %v, want %v", gotResult, tt.wantResult)
 			}
 		})
 	}
