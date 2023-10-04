@@ -967,32 +967,27 @@ func TestMathRune(t *testing.T) {
 }
 
 func TestMathBigInt(t *testing.T) {
-	valueOneBigInt, _ := new(big.Int).SetString("1", 10)
-	valueTwoBigInt, _ := new(big.Int).SetString("1", 10)
-	valueThreeBigInt, _ := new(big.Int).SetString("1", 10)
-	resultBigInt, _ := new(big.Int).SetString("1", 10)
-
 	type args struct {
-		valueOneBigInt   big.Int
-		valueTwoBigInt   big.Int
-		valueThreeBigInt big.Int
+		valueOneBigInt   *big.Int
+		valueTwoBigInt   *big.Int
+		valueThreeBigInt *big.Int
 		mathOperation    string
 	}
 	tests := []struct {
 		name       string
 		args       args
-		wantResult big.Int
+		wantResult *big.Int
 		wantErr    bool
 	}{
 		{
 			name: "* 1",
 			args: args{
-				valueOneBigInt:   *valueOneBigInt,
-				valueTwoBigInt:   *valueTwoBigInt,
-				valueThreeBigInt: *valueThreeBigInt,
+				valueOneBigInt:   big.NewInt(1),
+				valueTwoBigInt:   big.NewInt(1),
+				valueThreeBigInt: big.NewInt(1),
 				mathOperation:    "*",
 			},
-			wantResult: *resultBigInt,
+			wantResult: big.NewInt(1),
 			wantErr:    false,
 		},
 	}
@@ -1011,32 +1006,27 @@ func TestMathBigInt(t *testing.T) {
 }
 
 func TestMathBigFloat(t *testing.T) {
-	valueOneBigFloat, _ := new(big.Float).SetString("1.0")
-	valueTwoBigFloat, _ := new(big.Float).SetString("1.0")
-	valueThreeBigFloat, _ := new(big.Float).SetString("1.0")
-	resultBigFloat, _ := new(big.Float).SetString("1.0")
-
 	type args struct {
-		valueOneBigInt   big.Float
-		valueTwoBigInt   big.Float
-		valueThreeBigInt big.Float
+		valueOneBigInt   *big.Float
+		valueTwoBigInt   *big.Float
+		valueThreeBigInt *big.Float
 		mathOperation    string
 	}
 	tests := []struct {
 		name       string
 		args       args
-		wantResult big.Float
+		wantResult *big.Float
 		wantErr    bool
 	}{
 		{
 			name: "* 1",
 			args: args{
-				valueOneBigInt:   *valueOneBigFloat,
-				valueTwoBigInt:   *valueTwoBigFloat,
-				valueThreeBigInt: *valueThreeBigFloat,
+				valueOneBigInt:   big.NewFloat(1.1),
+				valueTwoBigInt:   big.NewFloat(1.0),
+				valueThreeBigInt: big.NewFloat(1.0),
 				mathOperation:    "*",
 			},
-			wantResult: *resultBigFloat,
+			wantResult: big.NewFloat(1.1),
 			wantErr:    false,
 		},
 	}
@@ -1055,32 +1045,27 @@ func TestMathBigFloat(t *testing.T) {
 }
 
 func TestMathBigRat(t *testing.T) {
-	valueOneBigRat := big.NewRat(1, 3)
-	valueTwoBigRat := big.NewRat(1, 3)
-	valueThreeBigRat := big.NewRat(1, 3)
-	valueBigRat := big.NewRat(1, 1)
-
 	type args struct {
-		valueOneBigRat   big.Rat
-		valueTwoBigRat   big.Rat
-		valueThreeBigRat big.Rat
+		valueOneBigRat   *big.Rat
+		valueTwoBigRat   *big.Rat
+		valueThreeBigRat *big.Rat
 		mathOperation    string
 	}
 	tests := []struct {
 		name       string
 		args       args
-		wantResult big.Rat
+		wantResult *big.Rat
 		wantErr    bool
 	}{
 		{
 			name: "",
 			args: args{
-				valueOneBigRat:   *valueOneBigRat,
-				valueTwoBigRat:   *valueTwoBigRat,
-				valueThreeBigRat: *valueThreeBigRat,
+				valueOneBigRat:   big.NewRat(1, 3),
+				valueTwoBigRat:   big.NewRat(1, 3),
+				valueThreeBigRat: big.NewRat(1, 3),
 				mathOperation:    "+",
 			},
-			wantResult: *valueBigRat,
+			wantResult: big.NewRat(1, 1),
 			wantErr:    false,
 		},
 	}

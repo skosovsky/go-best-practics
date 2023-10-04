@@ -286,67 +286,67 @@ func main() {
 	fmt.Printf("Var: %T, Size: %v\n\n", resultRuneStruct, unsafe.Sizeof(resultRuneStruct))
 
 	// BigInt
-	valueOneBigInt, _ := new(big.Int).SetString("25000000000000000000", 10)
-	valueTwoBigInt, _ := new(big.Int).SetString("2400000000000000000", 10)
-	valueThreeBigInt, _ := new(big.Int).SetString("230000000000000000", 10)
+	valueOneBigInt := big.NewInt(25000000000000000000)
+	valueTwoBigInt := big.NewInt(24000000000000000000)
+	valueThreeBigInt := big.NewInt(24000000000000000000)
 
-	resultMulBigInt, _ := operation.MathBigInt(*valueOneBigInt, *valueTwoBigInt, *valueThreeBigInt, "*")
-	resultDivBigInt, err := operation.MathBigInt(*valueOneBigInt, *valueTwoBigInt, *valueThreeBigInt, "/")
+	resultMulBigInt, _ := operation.MathBigInt(valueOneBigInt, valueTwoBigInt, valueThreeBigInt, "*")
+	resultDivBigInt, err := operation.MathBigInt(valueOneBigInt, valueTwoBigInt, valueThreeBigInt, "/")
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	resultSubBigInt, _ := operation.MathBigInt(*valueOneBigInt, *valueTwoBigInt, *valueThreeBigInt, "-")
-	resultSumBigInt, _ := operation.MathBigInt(*valueOneBigInt, *valueTwoBigInt, *valueThreeBigInt, "+")
+	resultSubBigInt, _ := operation.MathBigInt(valueOneBigInt, valueTwoBigInt, valueThreeBigInt, "-")
+	resultSumBigInt, _ := operation.MathBigInt(valueOneBigInt, valueTwoBigInt, valueThreeBigInt, "+")
 
 	fmt.Println("result fot BigInt:")
 	resultBigIntMap := map[string]big.Int{
-		"resultMulBigInt": resultMulBigInt,
-		"resultDivBigInt": resultDivBigInt,
-		"resultSubBigInt": resultSubBigInt,
-		"resultSumBigInt": resultSumBigInt,
+		"resultMulBigInt": *resultMulBigInt,
+		"resultDivBigInt": *resultDivBigInt,
+		"resultSubBigInt": *resultSubBigInt,
+		"resultSumBigInt": *resultSumBigInt,
 	}
 	fmt.Printf("Var: %T, Size: %v\n", resultBigIntMap, unsafe.Sizeof(resultBigIntMap))
 
-	resultBigIntSlice := []big.Int{resultMulBigInt, resultDivBigInt, resultSubBigInt, resultSumBigInt}
+	resultBigIntSlice := []big.Int{*resultMulBigInt, *resultDivBigInt, *resultSubBigInt, *resultSumBigInt}
 	fmt.Printf("Var: %T, Size: %v\n", resultBigIntSlice, unsafe.Sizeof(resultBigIntSlice))
 
-	resultBigIntStruct.resultMul = resultMulBigInt
-	resultBigIntStruct.resultDiv = resultDivBigInt
-	resultBigIntStruct.resultSub = resultSubBigInt
-	resultBigIntStruct.resultSum = resultSumBigInt
+	resultBigIntStruct.resultMul = *resultMulBigInt
+	resultBigIntStruct.resultDiv = *resultDivBigInt
+	resultBigIntStruct.resultSub = *resultSubBigInt
+	resultBigIntStruct.resultSum = *resultSumBigInt
 	fmt.Printf("Var: %T, Size: %v\n\n", resultBigIntStruct, unsafe.Sizeof(resultBigIntStruct))
 
 	// BigFloat
-	valueOneBigFloat, _ := new(big.Float).SetString("25000000000000000000.555")
-	valueTwoBigFloat, _ := new(big.Float).SetString("2400000000000000000.555")
-	valueThreeBigFloat, _ := new(big.Float).SetString("230000000000000000.555")
+	valueOneBigFloat := big.NewFloat(25000000000000000000.555)
+	valueTwoBigFloat := big.NewFloat(24000000000000000000.555)
+	valueThreeBigFloat := big.NewFloat(24000000000000000000.555)
 
-	resultMulBigFloat, _ := operation.MathBigFloat(*valueOneBigFloat, *valueTwoBigFloat, *valueThreeBigFloat, "*")
-	resultDivBigFloat, err := operation.MathBigFloat(*valueOneBigFloat, *valueTwoBigFloat, *valueThreeBigFloat, "/")
+	resultMulBigFloat, _ := operation.MathBigFloat(valueOneBigFloat, valueTwoBigFloat, valueThreeBigFloat, "*")
+	resultDivBigFloat, err := operation.MathBigFloat(valueOneBigFloat, valueTwoBigFloat, valueThreeBigFloat, "/")
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	resultSubBigFloat, _ := operation.MathBigFloat(*valueOneBigFloat, *valueTwoBigFloat, *valueThreeBigFloat, "-")
-	resultSumBigFloat, _ := operation.MathBigFloat(*valueOneBigFloat, *valueTwoBigFloat, *valueThreeBigFloat, "+")
+	resultSubBigFloat, _ := operation.MathBigFloat(valueOneBigFloat, valueTwoBigFloat, valueThreeBigFloat, "-")
+	resultSumBigFloat, _ := operation.MathBigFloat(valueOneBigFloat, valueTwoBigFloat, valueThreeBigFloat, "+")
 
 	fmt.Println("result fot BigFloat:")
 	resultBigFloatMap := map[string]big.Float{
-		"resultMulBigFloat": resultMulBigFloat,
-		"resultDivBigFloat": resultDivBigFloat,
-		"resultSubBigFloat": resultSubBigFloat,
-		"resultSumBigFloat": resultSumBigFloat,
+		"resultMulBigFloat": *resultMulBigFloat,
+		"resultDivBigFloat": *resultDivBigFloat,
+		"resultSubBigFloat": *resultSubBigFloat,
+		"resultSumBigFloat": *resultSumBigFloat,
 	}
 	fmt.Printf("Var: %T, Size: %v\n", resultBigFloatMap, unsafe.Sizeof(resultBigFloatMap))
 
-	resultBigFloatSlice := []big.Float{resultMulBigFloat, resultDivBigFloat, resultSubBigFloat, resultSumBigFloat}
+	resultBigFloatSlice := []big.Float{*resultMulBigFloat, *resultDivBigFloat, *resultSubBigFloat, *resultSumBigFloat}
 	fmt.Printf("Var: %T, Size: %v\n", resultBigFloatSlice, unsafe.Sizeof(resultBigFloatSlice))
 
-	resultBigFloatStruct.resultMul = resultMulBigFloat
-	resultBigFloatStruct.resultDiv = resultDivBigFloat
-	resultBigFloatStruct.resultSub = resultSubBigFloat
-	resultBigFloatStruct.resultSum = resultSumBigFloat
+	resultBigFloatStruct.resultMul = *resultMulBigFloat
+	resultBigFloatStruct.resultDiv = *resultDivBigFloat
+	resultBigFloatStruct.resultSub = *resultSubBigFloat
+	resultBigFloatStruct.resultSum = *resultSumBigFloat
 	fmt.Printf("Var: %T, Size: %v\n\n", resultBigFloatStruct, unsafe.Sizeof(resultBigFloatStruct))
 
 	// BigRat
@@ -354,31 +354,31 @@ func main() {
 	valueTwoBigRat := big.NewRat(2, 3)
 	valueThreeBigRat := big.NewRat(3, 4)
 
-	resultMulBigRat, _ := operation.MathBigRat(*valueOneBigRat, *valueTwoBigRat, *valueThreeBigRat, "*")
-	resultDivBigRat, err := operation.MathBigRat(*valueOneBigRat, *valueTwoBigRat, *valueThreeBigRat, "/")
+	resultMulBigRat, _ := operation.MathBigRat(valueOneBigRat, valueTwoBigRat, valueThreeBigRat, "*")
+	resultDivBigRat, err := operation.MathBigRat(valueOneBigRat, valueTwoBigRat, valueThreeBigRat, "/")
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	resultSubBigRat, _ := operation.MathBigRat(*valueOneBigRat, *valueTwoBigRat, *valueThreeBigRat, "-")
-	resultSumBigRat, _ := operation.MathBigRat(*valueOneBigRat, *valueTwoBigRat, *valueThreeBigRat, "+")
+	resultSubBigRat, _ := operation.MathBigRat(valueOneBigRat, valueTwoBigRat, valueThreeBigRat, "-")
+	resultSumBigRat, _ := operation.MathBigRat(valueOneBigRat, valueTwoBigRat, valueThreeBigRat, "+")
 
 	fmt.Println("result fot BigRat:")
 	resultBigRatMap := map[string]big.Rat{
-		"resultMulBigRat": resultMulBigRat,
-		"resultDivBigRat": resultDivBigRat,
-		"resultSubBigRat": resultSubBigRat,
-		"resultSumBigRat": resultSumBigRat,
+		"resultMulBigRat": *resultMulBigRat,
+		"resultDivBigRat": *resultDivBigRat,
+		"resultSubBigRat": *resultSubBigRat,
+		"resultSumBigRat": *resultSumBigRat,
 	}
 	fmt.Printf("Var: %T, Size: %v\n", resultBigRatMap, unsafe.Sizeof(resultBigRatMap))
 
-	resultBigRatSlice := []big.Rat{resultMulBigRat, resultDivBigRat, resultSubBigRat, resultSumBigRat}
+	resultBigRatSlice := []big.Rat{*resultMulBigRat, *resultDivBigRat, *resultSubBigRat, *resultSumBigRat}
 	fmt.Printf("Var: %T, Size: %v\n", resultBigRatSlice, unsafe.Sizeof(resultBigRatSlice))
 
-	resultBigRatStruct.resultMul = resultMulBigRat
-	resultBigRatStruct.resultDiv = resultDivBigRat
-	resultBigRatStruct.resultSub = resultSubBigRat
-	resultBigRatStruct.resultSum = resultSumBigRat
+	resultBigRatStruct.resultMul = *resultMulBigRat
+	resultBigRatStruct.resultDiv = *resultDivBigRat
+	resultBigRatStruct.resultSub = *resultSubBigRat
+	resultBigRatStruct.resultSum = *resultSumBigRat
 	fmt.Printf("Var: %T, Size: %v\n\n", resultBigRatStruct, unsafe.Sizeof(resultBigRatStruct))
 
 	// Вызов функции по указателям и без

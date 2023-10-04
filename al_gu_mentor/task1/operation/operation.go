@@ -192,57 +192,57 @@ func MathRune(valueOne int, valueTwo int, valueThree int, mathOperation string) 
 
 }
 
-func MathBigInt(valueOneBigInt big.Int, valueTwoBigInt big.Int, valueThreeBigInt big.Int, mathOperation string) (result big.Int, err error) {
+func MathBigInt(valueOneBigInt *big.Int, valueTwoBigInt *big.Int, valueThreeBigInt *big.Int, mathOperation string) (result *big.Int, err error) {
 	switch mathOperation {
 	case "*":
-		result.Mul(result.Mul(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+		result = valueOneBigInt.Mul(valueOneBigInt, valueTwoBigInt.Mul(valueTwoBigInt, valueThreeBigInt))
 	case "/":
-		if valueTwoBigInt.Text(10) == "0" || valueThreeBigInt.Text(10) == "0" {
-			return *big.NewInt(0), errors.New("division operation failed due to division by 0")
+		if valueTwoBigInt.Cmp(big.NewInt(0)) == 0 || valueThreeBigInt.Cmp(big.NewInt(0)) == 0 {
+			return big.NewInt(0), errors.New("division operation failed due to division by 0")
 		}
-		result.Div(result.Div(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+		result = valueOneBigInt.Div(valueOneBigInt, valueTwoBigInt.Div(valueTwoBigInt, valueThreeBigInt))
 	case "-":
-		result.Sub(result.Sub(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+		result = valueOneBigInt.Sub(valueOneBigInt, valueTwoBigInt.Sub(valueTwoBigInt, valueThreeBigInt))
 	case "+":
-		result.Add(result.Add(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+		result = valueOneBigInt.Add(valueOneBigInt, valueTwoBigInt.Add(valueTwoBigInt, valueThreeBigInt))
 	}
 
 	return result, err
 
 }
 
-func MathBigFloat(valueOneBigInt big.Float, valueTwoBigInt big.Float, valueThreeBigInt big.Float, mathOperation string) (result big.Float, err error) {
+func MathBigFloat(valueOneBigFloat *big.Float, valueTwoBigFloat *big.Float, valueThreeBigFloat *big.Float, mathOperation string) (result *big.Float, err error) {
 	switch mathOperation {
 	case "*":
-		result.Mul(result.Mul(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+		result = valueOneBigFloat.Mul(valueOneBigFloat, valueTwoBigFloat.Mul(valueTwoBigFloat, valueThreeBigFloat))
 	case "/":
-		if valueTwoBigInt.Text('f', 0) == "0" || valueThreeBigInt.Text('f', 0) == "0" {
-			return *big.NewFloat(0), errors.New("division operation failed due to division by 0")
+		if valueTwoBigFloat.Cmp(big.NewFloat(0)) == 0 || valueThreeBigFloat.Cmp(big.NewFloat(0)) == 0 {
+			return big.NewFloat(0), errors.New("division operation failed due to division by 0")
 		}
-		result.Quo(result.Quo(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+		result = valueOneBigFloat.Quo(valueOneBigFloat, valueTwoBigFloat.Quo(valueTwoBigFloat, valueThreeBigFloat))
 	case "-":
-		result.Sub(result.Sub(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+		result = valueOneBigFloat.Sub(valueOneBigFloat, valueTwoBigFloat.Sub(valueTwoBigFloat, valueThreeBigFloat))
 	case "+":
-		result.Add(result.Add(&valueOneBigInt, &valueTwoBigInt), &valueThreeBigInt)
+		result = valueOneBigFloat.Add(valueOneBigFloat, valueTwoBigFloat.Add(valueTwoBigFloat, valueThreeBigFloat))
 	}
 
 	return result, err
 
 }
 
-func MathBigRat(valueOneBigRat big.Rat, valueTwoBigRat big.Rat, valueThreeBigRat big.Rat, mathOperation string) (result big.Rat, err error) {
+func MathBigRat(valueOneBigRat *big.Rat, valueTwoBigRat *big.Rat, valueThreeBigRat *big.Rat, mathOperation string) (result *big.Rat, err error) {
 	switch mathOperation {
 	case "*":
-		result.Mul(result.Mul(&valueOneBigRat, &valueTwoBigRat), &valueThreeBigRat)
+		result = valueOneBigRat.Mul(valueOneBigRat, valueTwoBigRat.Mul(valueTwoBigRat, valueThreeBigRat))
 	case "/":
-		if valueTwoBigRat.RatString() == "" || valueThreeBigRat.RatString() == "0" {
-			return *big.NewRat(0, 0), errors.New("division operation failed due to division by 0")
+		if valueTwoBigRat.Cmp(big.NewRat(0, 1)) == 0 || valueThreeBigRat.Cmp(big.NewRat(0, 1)) == 0 {
+			return big.NewRat(0, 0), errors.New("division operation failed due to division by 0")
 		}
-		result.Quo(result.Quo(&valueOneBigRat, &valueTwoBigRat), &valueThreeBigRat)
+		result = valueOneBigRat.Quo(valueOneBigRat, valueTwoBigRat.Quo(valueTwoBigRat, valueThreeBigRat))
 	case "-":
-		result.Sub(result.Sub(&valueOneBigRat, &valueTwoBigRat), &valueThreeBigRat)
+		result = valueOneBigRat.Sub(valueOneBigRat, valueTwoBigRat.Sub(valueTwoBigRat, valueThreeBigRat))
 	case "+":
-		result.Add(result.Add(&valueOneBigRat, &valueTwoBigRat), &valueThreeBigRat)
+		result = valueOneBigRat.Add(valueOneBigRat, valueTwoBigRat.Add(valueTwoBigRat, valueThreeBigRat))
 	}
 
 	return result, err
