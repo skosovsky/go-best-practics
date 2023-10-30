@@ -1,6 +1,0 @@
-count=1;while [ $count -le 3 ];do echo $(whoami);let count+=1;done
-
-count=0;while [ $count -le 100 ];do echo $count;let count+=2;done
-
-nano test.txt
-crontab -e # */10 * * * * cp ~/lws/test.txt ~/lws/test.txt.bak
