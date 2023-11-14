@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 )
@@ -30,7 +31,7 @@ var (
 // Как вы помните, функция инициализации стартует первой
 func init() {
 	// задаём и парсим флаги
-	flag.StringVar(&url, "url", "", "url address")
+	flag.StringVar(&url, "url", "https://en.wikipedia.org/wiki/Lionel_Messi", "url address")
 	flag.IntVar(&depthLimit, "depth", 3, "max depth for run")
 	flag.Parse()
 
@@ -86,6 +87,7 @@ func watchSignals(cancel context.CancelFunc) {
 
 // ловим сигналы USR1
 func watchUsrSignals() {
+	m := sync.Mutex{}
 	osSignalUsrChan := make(chan os.Signal)
 
 	signal.Notify(osSignalUsrChan,
@@ -95,7 +97,9 @@ func watchUsrSignals() {
 	log.Printf("got signal %q", sigUsr.String())
 
 	// если сигнал получен, увеличиваем глубину
+	m.Lock()
 	depthLimit += 2
+	m.Unlock()
 }
 
 func watchCrawler(ctx context.Context, results <-chan crawlResult, maxErrors, maxResults int) chan struct{} {
