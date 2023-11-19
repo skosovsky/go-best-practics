@@ -1,17 +1,19 @@
 package main
 
 import (
-	"duplicates/internal/filecrcalt"
-	"duplicates/pkg/filecrc"
 	"flag"
 	"fmt"
-	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
-	"github.com/spf13/afero"
 	"os"
 	"os/exec"
 	"strings"
 	"sync"
+
+	"duplicates/internal/filecrcalt"
+	"duplicates/pkg/filecrc"
+
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
+	"github.com/spf13/afero"
 )
 
 type File struct {
@@ -24,14 +26,14 @@ type File struct {
 }
 
 func main() {
-	var listFiles = make(map[string]File)
+	listFiles := make(map[string]File)
 	var wg sync.WaitGroup
 
 	log.Info().Msg("start service")
 	pathToDir, needDelete, debug := getPath()
 
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
-	if *debug == true {
+	if *debug {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	}
 
@@ -50,7 +52,7 @@ func main() {
 }
 
 // Функция получает параметры из командной строки или назначает их по-умолчанию
-func getPath() (pathToDir string, needDelete *bool, debug *bool) {
+func getPath() (pathToDir string, needDelete, debug *bool) {
 	flag.StringVar(&pathToDir, "path", "/Users/skosovsky/Downloads/Test", "path to dir")
 	needDelete = flag.Bool("D", false, "need delete")
 	debug = flag.Bool("debug", false, "need debug")
@@ -59,16 +61,21 @@ func getPath() (pathToDir string, needDelete *bool, debug *bool) {
 	return pathToDir, needDelete, debug
 }
 
-// Функция обходит все папки и подпапки и собирает первичные данные о файлах
+// Функция обходит все папки и под папки и собирает первичные данные о файлах
 func getFiles(pathToDir string, listFiles map[string]File, wg *sync.WaitGroup) {
 	var m sync.Mutex
 	defer wg.Done()
 
 	dir, err := os.Open(pathToDir)
-	defer dir.Close()
 	if err != nil {
 		log.Error().Stack().Err(err).Msg("error by open files")
 	}
+	defer func(dir *os.File) {
+		err = dir.Close()
+		if err != nil {
+			log.Error().Stack().Err(err).Msg("error by close file")
+		}
+	}(dir)
 
 	files, err := dir.Readdir(-1)
 	if err != nil {
@@ -76,11 +83,10 @@ func getFiles(pathToDir string, listFiles map[string]File, wg *sync.WaitGroup) {
 	}
 
 	for _, file := range files {
-		if file.IsDir() == true {
+		if file.IsDir() {
 			wg.Add(1)
 			go getFiles(fmt.Sprint(pathToDir, "/", file.Name()), listFiles, wg)
 		} else {
-
 			log.Info().Msg("current file" + file.Name())
 			m.Lock()
 			currFile := File{file.Name(), pathToDir + "/", "", file.Size(), false, false}
@@ -90,8 +96,10 @@ func getFiles(pathToDir string, listFiles map[string]File, wg *sync.WaitGroup) {
 			// Cleat output for visual
 			cmd := exec.Command("clear")
 			cmd.Stdout = os.Stdout
-			cmd.Run()
-
+			err := cmd.Run()
+			if err != nil {
+				log.Error().Stack().Err(err).Msg("error by clean Stdout")
+			}
 		}
 	}
 }
@@ -99,7 +107,7 @@ func getFiles(pathToDir string, listFiles map[string]File, wg *sync.WaitGroup) {
 // Функция ищет дубликаты по размеру файлов, при совпадении сравнивает их контрольную сумму
 func findDups(listFilesMap map[string]File, wg *sync.WaitGroup) {
 	var m sync.Mutex
-	var appFs = afero.NewOsFs() // test
+	appFs := afero.NewOsFs() // test
 	log.Debug().Stack().Msg("star func findDups")
 
 	for key, val := range listFilesMap {
@@ -124,7 +132,8 @@ func findDups(listFilesMap map[string]File, wg *sync.WaitGroup) {
 
 				wg.Wait()
 
-				if listFilesMap[key].fileMD5 == listFilesMap[key2].fileMD5 && key != key2 && listFilesMap[key].fileMD5 != "" && listFilesMap[key].fileCheck == true && listFilesMap[key2].fileCheck == false {
+				if listFilesMap[key].fileMD5 == listFilesMap[key2].fileMD5 && key != key2 && listFilesMap[key].fileMD5 != "" &&
+					listFilesMap[key].fileCheck && !listFilesMap[key2].fileCheck {
 					currFile2 := listFilesMap[key2]
 					currFile2.fileCheck = true
 					currFile2.fileDel = true
@@ -144,22 +153,22 @@ func delDups(listFilesMap map[string]File, needDel bool) {
 	var yes string
 
 	for key, val := range listFilesMap {
-
-		if val.fileDel == true {
-			if needDel == true {
-
-				if confirmation == true {
+		if val.fileDel {
+			if needDel {
+				if confirmation {
 					fmt.Println("Are you sure you need to delete the files? Yes or No?")
-					fmt.Scan(&yes)
+					_, err := fmt.Scan(&yes)
+					if err != nil {
+						log.Error().Stack().Err(err).Msg("error by Scan")
+					}
 
-					if strings.ToLower(yes) != "yes" {
+					if !strings.EqualFold(yes, "yes") {
 						fmt.Println("Nothing delete")
 						return
 					}
 
 					confirmation = false
 				}
-
 				err := os.Remove(key)
 				if err != nil {
 					fmt.Println("Error, not delete", key)
@@ -177,7 +186,7 @@ func delDups(listFilesMap map[string]File, needDel bool) {
 	if count == 0 {
 		fmt.Println("Nothing delete")
 	} else {
-		if needDel == true {
+		if needDel {
 			fmt.Println("Delete", count, "files")
 		} else {
 			fmt.Println("Need delete", count, "files")
