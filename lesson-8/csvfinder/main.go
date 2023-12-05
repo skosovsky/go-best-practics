@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
@@ -17,6 +19,9 @@ type contentFromFile struct {
 }
 
 func main() {
+	getExPath()
+	getLastCommit()
+
 	pathToFile, _, _ := getSettings()
 	operator := [5]string{">=", "<=", "=", ">", "<"}
 	//logical := [2]string{"AND", "OR"}
@@ -71,6 +76,7 @@ func readInput(operator [5]string) []string {
 	var vals []string
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Split(bufio.ScanWords)
+
 	for scanner.Scan() {
 		val := scanner.Text()
 		for _, v := range operator {
@@ -82,7 +88,6 @@ func readInput(operator [5]string) []string {
 				break
 			}
 		}
-
 		if strings.Contains(val, " ") {
 			vals = append(vals, strings.Split(val, " ")...)
 		} else {
@@ -90,4 +95,21 @@ func readInput(operator [5]string) []string {
 		}
 	}
 	return vals
+}
+
+func getExPath() {
+	exPath, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Current paht:", exPath)
+}
+
+func getLastCommit() {
+	out, err := exec.Command("git", "rev-parse", "HEAD").Output()
+	if err != nil {
+		fmt.Println(err)
+	}
+	commitHash := string(out)
+	fmt.Println("Last commit:", commitHash)
 }
